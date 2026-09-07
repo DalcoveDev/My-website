@@ -1,0 +1,17 @@
+{
+  "name": "dalcove-portfolio",
+  "version": "1.0.0",
+  "description": "Dalcove — Cinematic Digital Portfolio",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "vite": "^5.4.2"
+  }
+}
