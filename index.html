@@ -112,47 +112,22 @@
         <div class="services-container">
           <span class="section-label">02 / Services</span>
           <h2 class="services-title">What I Create</h2>
-          <div class="services-list">
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">01</span>
-              <h3>Software Development</h3>
-              <p>Custom software solutions built with modern technologies and thoughtful architecture.</p>
+          <div class="services-list" id="services-list"></div>
+          <button class="services-view-more" id="services-view-more" data-cursor="VIEW">
+            <span>VIEW MORE</span>
+            <span>→</span>
+          </button>
+        </div>
+        <div class="services-expanded" id="services-expanded">
+          <div class="services-expanded-inner">
+            <div class="services-expanded-header">
+              <span class="section-label">All Services</span>
+              <button class="services-close" id="services-close" data-cursor="VIEW">
+                <span>←</span>
+                <span>CLOSE</span>
+              </button>
             </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">02</span>
-              <h3>Web Development</h3>
-              <p>Performant, responsive, and visually intentional web experiences.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">03</span>
-              <h3>Digital Media</h3>
-              <p>Creative media production blending technology with visual storytelling.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">04</span>
-              <h3>Creative Development</h3>
-              <p>Experimental and interactive digital experiences that push creative boundaries.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">05</span>
-              <h3>UI/UX Design</h3>
-              <p>User-centered interfaces that balance aesthetics with functionality.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">06</span>
-              <h3>Interactive Experiences</h3>
-              <p>Immersive digital installations and interactive web applications.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">07</span>
-              <h3>Content & Media Management</h3>
-              <p>Strategic content systems and media pipeline optimization.</p>
-            </div>
-            <div class="service-item" data-cursor="VIEW">
-              <span class="service-num">08</span>
-              <h3>Digital Solutions</h3>
-              <p>End-to-end digital strategy, implementation, and deployment.</p>
-            </div>
+            <div class="services-expanded-list" id="services-expanded-list"></div>
           </div>
         </div>
       </section>
@@ -348,33 +323,14 @@
         <div class="testimonials-container">
           <span class="section-label">05 / Testimonials</span>
           <h2 class="testimonials-title">Words</h2>
-          <div class="testimonials-list">
-            <div class="testimonial-item">
-              <blockquote class="testimonial-quote">
-                "Dalcove brings a rare combination of technical precision and creative vision. Every project feels like a work of art."
-              </blockquote>
-              <div class="testimonial-author">
-                <span class="testimonial-name">Sarah Mensah</span>
-                <span class="testimonial-role">Creative Director, Lumina Studio</span>
-              </div>
-            </div>
-            <div class="testimonial-item">
-              <blockquote class="testimonial-quote">
-                "Working with Dalcove transformed our digital presence. The attention to interaction and detail is unmatched."
-              </blockquote>
-              <div class="testimonial-author">
-                <span class="testimonial-name">Jean-Pierre Hakizimana</span>
-                <span class="testimonial-role">Founder, TechFlow Africa</span>
-              </div>
-            </div>
-            <div class="testimonial-item">
-              <blockquote class="testimonial-quote">
-                "The immersive experience Dalcove created for our exhibition redefined what our visitors expected from digital art."
-              </blockquote>
-              <div class="testimonial-author">
-                <span class="testimonial-name">Amara Okafor</span>
-                <span class="testimonial-role">Curator, Digital Arts Festival</span>
-              </div>
+          <div class="testimonial-viewer" id="testimonial-viewer">
+            <div class="testimonial-active" id="testimonial-active"></div>
+            <div class="testimonial-controls">
+              <button class="testimonial-next" id="testimonial-next" data-cursor="VIEW">
+                <span>NEXT</span>
+                <span>→</span>
+              </button>
+              <span class="testimonial-progress" id="testimonial-progress">01 / 03</span>
             </div>
           </div>
         </div>

@@ -94,7 +94,7 @@ function initNav() {
       if (target) {
         gsap.to(window, {
           duration: 1.2,
-          scrollTo: { y: target, offsetY: 0 },
+          scrollTo: { y: target, offsetY: 80 },
           ease: 'power3.inOut',
         });
       }
@@ -270,13 +270,74 @@ function initAbout() {
 }
 
 /* --- SERVICES --- */
+const servicesData = [
+  { title: 'Software Development', desc: 'Custom software solutions built with modern technologies and thoughtful architecture.' },
+  { title: 'Web Development', desc: 'Performant, responsive, and visually intentional web experiences.' },
+  { title: 'Digital Media', desc: 'Creative media production blending technology with visual storytelling.' },
+  { title: 'Creative Development', desc: 'Experimental and interactive digital experiences that push creative boundaries.' },
+  { title: 'UI/UX Design', desc: 'User-centered interfaces that balance aesthetics with functionality.' },
+  { title: 'Interactive Experiences', desc: 'Immersive digital installations and interactive web applications.' },
+  { title: 'Content & Media Management', desc: 'Strategic content systems and media pipeline optimization.' },
+  { title: 'Digital Solutions', desc: 'End-to-end digital strategy, implementation, and deployment.' },
+];
+
+function renderServiceItem(service, index) {
+  return `
+    <div class="service-item" data-cursor="VIEW">
+      <span class="service-num">${String(index + 1).padStart(2, '0')}</span>
+      <h3>${service.title}</h3>
+      <p>${service.desc}</p>
+    </div>
+  `;
+}
+
 function initServices() {
-  const items = document.querySelectorAll('.service-item');
+  const listEl = document.getElementById('services-list');
+  const expandedListEl = document.getElementById('services-expanded-list');
+  const viewMoreBtn = document.getElementById('services-view-more');
+  const expandedEl = document.getElementById('services-expanded');
+  const closeBtn = document.getElementById('services-close');
   const title = document.querySelector('.services-title');
   const label = document.querySelector('.services .section-label');
 
+  /* Render primary services (first 4) */
+  const primaryCount = 4;
+  listEl.innerHTML = servicesData.slice(0, primaryCount)
+    .map((s, i) => renderServiceItem(s, i)).join('');
+
+  /* Render all services in expanded view */
+  expandedListEl.innerHTML = servicesData
+    .map((s, i) => renderServiceItem(s, i)).join('');
+
+  /* View More toggle */
+  viewMoreBtn.addEventListener('click', () => {
+    expandedEl.classList.add('is-active');
+    gsap.fromTo(expandedEl, { opacity: 0 }, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+    });
+    gsap.from('.services-expanded-list .service-item', {
+      opacity: 0,
+      y: 30,
+      duration: 0.5,
+      stagger: 0.06,
+      ease: 'power2.out',
+      delay: 0.2,
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    gsap.to(expandedEl, {
+      opacity: 0,
+      duration: 0.4,
+      ease: 'power2.in',
+      onComplete: () => expandedEl.classList.remove('is-active'),
+    });
+  });
+
   if (prefersReducedMotion()) {
-    gsap.set([title, label, ...items], { opacity: 1, y: 0 });
+    gsap.set([title, label], { opacity: 1, y: 0 });
     return;
   }
 
@@ -301,15 +362,24 @@ function initServices() {
     }
   });
 
-  gsap.from(items, {
+  gsap.from('.services-list .service-item', {
     opacity: 0,
-    y: 50,
-    duration: 0.8,
+    y: 30,
+    duration: 0.6,
     stagger: 0.1,
     ease: 'power2.out',
     scrollTrigger: {
       trigger: '.services-list',
       start: 'top 80%',
+    }
+  });
+
+  gsap.from(viewMoreBtn, {
+    opacity: 0,
+    duration: 0.6,
+    scrollTrigger: {
+      trigger: viewMoreBtn,
+      start: 'top 90%',
     }
   });
 }
@@ -473,13 +543,78 @@ function initGallery() {
 }
 
 /* --- TESTIMONIALS --- */
+const testimonialsData = [
+  {
+    quote: 'Dalcove brings a rare combination of technical precision and creative vision. Every project feels like a work of art.',
+    name: 'Sarah Mensah',
+    role: 'Creative Director, Lumina Studio',
+  },
+  {
+    quote: 'Working with Dalcove transformed our digital presence. The attention to interaction and detail is unmatched.',
+    name: 'Jean-Pierre Hakizimana',
+    role: 'Founder, TechFlow Africa',
+  },
+  {
+    quote: 'The immersive experience Dalcove created for our exhibition redefined what our visitors expected from digital art.',
+    name: 'Amara Okafor',
+    role: 'Curator, Digital Arts Festival',
+  },
+];
+
+function renderTestimonial(data) {
+  return `
+    <div class="testimonial-item">
+      <blockquote class="testimonial-quote">"${data.quote}"</blockquote>
+      <div class="testimonial-author">
+        <span class="testimonial-name">${data.name}</span>
+        <span class="testimonial-role">${data.role}</span>
+      </div>
+    </div>
+  `;
+}
+
 function initTestimonials() {
-  const items = document.querySelectorAll('.testimonial-item');
+  const activeEl = document.getElementById('testimonial-active');
+  const nextBtn = document.getElementById('testimonial-next');
+  const progressEl = document.getElementById('testimonial-progress');
   const title = document.querySelector('.testimonials-title');
   const label = document.querySelector('.testimonials .section-label');
 
+  let currentIndex = 0;
+  const total = testimonialsData.length;
+
+  function showTestimonial(index, direction = 'next') {
+    const outY = direction === 'next' ? -30 : 30;
+    const inY = direction === 'next' ? 30 : -30;
+
+    gsap.to(activeEl, {
+      opacity: 0,
+      y: outY,
+      duration: 0.35,
+      ease: 'power2.in',
+      onComplete: () => {
+        activeEl.innerHTML = renderTestimonial(testimonialsData[index]);
+        progressEl.textContent = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+        gsap.fromTo(activeEl,
+          { opacity: 0, y: inY },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }
+        );
+      }
+    });
+  }
+
+  /* Initial render */
+  activeEl.innerHTML = renderTestimonial(testimonialsData[0]);
+  progressEl.textContent = `01 / ${String(total).padStart(2, '0')}`;
+
+  /* Next button */
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % total;
+    showTestimonial(currentIndex, 'next');
+  });
+
   if (prefersReducedMotion()) {
-    gsap.set([title, label, ...items], { opacity: 1, y: 0 });
+    gsap.set([title, label], { opacity: 1, y: 0 });
     return;
   }
 
@@ -498,17 +633,12 @@ function initTestimonials() {
     scrollTrigger: { trigger: '.testimonials', start: 'top 60%' }
   });
 
-  items.forEach((item, i) => {
-    gsap.from(item, {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: item,
-        start: 'top 85%',
-      }
-    });
+  gsap.from('.testimonial-viewer', {
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: '.testimonial-viewer', start: 'top 85%' }
   });
 }
 

@@ -242,7 +242,9 @@ input, textarea {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-sm) var(--space-md);
-  mix-blend-mode: difference;
+  background: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-logo {
@@ -615,21 +617,23 @@ input, textarea {
 }
 
 .services-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .service-item {
-  padding: var(--space-md);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-sm);
-  transition: border-color var(--duration-normal), background var(--duration-normal);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--c-border);
+  transition: border-color var(--duration-normal);
+}
+
+.service-item:first-child {
+  border-top: 1px solid var(--c-border);
 }
 
 .service-item:hover {
   border-color: rgba(200, 255, 0, 0.2);
-  background: rgba(200, 255, 0, 0.03);
 }
 
 .service-num {
@@ -653,6 +657,91 @@ input, textarea {
   font-size: 0.85rem;
   color: var(--c-text-dim);
   line-height: 1.6;
+}
+
+/* View More button */
+.services-view-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) 0;
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.services-view-more:hover {
+  color: var(--c-text);
+}
+
+.services-view-more span:last-child {
+  transition: transform var(--duration-fast);
+}
+
+.services-view-more:hover span:last-child {
+  transform: translateX(4px);
+}
+
+/* Expanded overlay */
+.services-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay) + 5);
+  background: var(--c-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.services-expanded.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.services-expanded-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.services-expanded-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.services-close {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) 0;
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.services-close:hover {
+  color: var(--c-text);
+}
+
+.services-expanded-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
 }
 
 /* --- PROJECTS --- */
@@ -981,10 +1070,19 @@ input, textarea {
   margin-bottom: var(--space-lg);
 }
 
-.testimonials-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+/* Single testimonial viewer */
+.testimonial-viewer {
+  position: relative;
+  min-height: 280px;
+}
+
+.testimonial-active {
+  position: relative;
+}
+
+.testimonial-active .testimonial-item {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .testimonial-item {
@@ -1027,6 +1125,48 @@ input, textarea {
 
 .testimonial-role {
   font-size: 0.75rem;
+  color: var(--c-text-dim);
+}
+
+/* Controls */
+.testimonial-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-md);
+}
+
+.testimonial-next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) 0;
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.testimonial-next:hover {
+  color: var(--c-text);
+}
+
+.testimonial-next span:last-child {
+  transition: transform var(--duration-fast);
+}
+
+.testimonial-next:hover span:last-child {
+  transform: translateX(4px);
+}
+
+.testimonial-progress {
+  font-family: var(--f-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
   color: var(--c-text-dim);
 }
 
@@ -1193,6 +1333,10 @@ input, textarea {
   }
 
   .services-list {
+    grid-template-columns: 1fr;
+  }
+
+  .services-expanded-list {
     grid-template-columns: 1fr;
   }
 
