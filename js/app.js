@@ -753,25 +753,35 @@ function initSkills() {
     return;
   }
 
-  /* Build items — store skill data index on each item */
+  /* Build items */
   columns.forEach(col => {
     col.data.forEach((skill, i) => {
       const item = createSkillItem(skill);
       item.dataset.skillIdx = i;
       col.track.appendChild(item);
     });
-    /* Duplicate sets for seamless loop */
-    const html = col.track.innerHTML;
-    col.track.insertAdjacentHTML('beforeend', html);
-    col.track.insertAdjacentHTML('beforeend', html);
+    /* Clone nodes for seamless loop — preserves data attributes */
+    const items = Array.from(col.track.children);
+    items.forEach(item => col.track.appendChild(item.cloneNode(true)));
   });
 
-  /* Create GSAP animations */
+  /* Create GSAP animations — measure actual half-track for seamless loop */
   const animations = columns.map(col => {
-    const itemH = col.track.querySelector('.skill-item').offsetHeight + 24;
-    const totalH = col.data.length * itemH;
+    const allItems = col.track.querySelectorAll('.skill-item');
+    const halfCount = col.data.length;
+    /* Measure actual height of first half of items */
+    let totalH = 0;
+    for (let i = 0; i < halfCount; i++) {
+      totalH += allItems[i].offsetHeight;
+    }
+    /* Add gaps between items */
+    const gap = parseFloat(getComputedStyle(col.track).gap) || 0;
+    totalH += gap * (halfCount - 1);
+    const direction = col.dir === 1 ? -1 : 1;
+
+    gsap.set(col.track, { y: 0 });
     return gsap.to(col.track, {
-      y: col.dir === 1 ? -totalH : totalH,
+      y: direction * totalH,
       duration: totalH / (25 * col.speed),
       ease: 'none',
       repeat: -1,
@@ -825,27 +835,27 @@ function initSkills() {
     }
   }
 
-  /* Attach hover events */
-  columns.forEach((col, colIdx) => {
-    col.track.querySelectorAll('.skill-item').forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        const idx = parseInt(item.dataset.skillIdx, 10);
-        showInfo(col.data[idx], item, colIdx);
-      });
-      item.addEventListener('mouseleave', hideInfo);
-    });
-  });
+  /* Event delegation on wall for hover and touch */
+  wall.addEventListener('mouseenter', (e) => {
+    const item = e.target.closest('.skill-item');
+    if (!item) return;
+    const colIdx = columns.findIndex(col => col.track.contains(item));
+    if (colIdx < 0) return;
+    const idx = parseInt(item.dataset.skillIdx, 10);
+    showInfo(columns[colIdx].data[idx], item, colIdx);
+  }, true);
 
-  /* Touch support */
+  wall.addEventListener('mouseleave', (e) => {
+    const item = e.target.closest('.skill-item');
+    if (item) hideInfo();
+  }, true);
+
   wall.addEventListener('click', (e) => {
     const item = e.target.closest('.skill-item');
     if (!item) { hideInfo(); return; }
-
     const colIdx = columns.findIndex(col => col.track.contains(item));
     if (colIdx < 0) return;
-
     if (activeItem === item) { hideInfo(); return; }
-
     const idx = parseInt(item.dataset.skillIdx, 10);
     showInfo(columns[colIdx].data[idx], item, colIdx);
   });
