@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "vite": "^5.4.2"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.21.5"
   }
 }
