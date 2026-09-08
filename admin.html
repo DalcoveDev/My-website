@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — DALCOVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-card">
+      <div class="login-logo">DALCOVE</div>
+      <div class="login-subtitle">ADMIN PANEL</div>
+      <form class="login-form" id="login-form">
+        <div class="login-field">
+          <label for="login-password">PASSWORD</label>
+          <input type="password" id="login-password" placeholder="Enter admin password" required>
+        </div>
+        <div class="login-error" id="login-error"></div>
+        <button type="submit" class="login-btn">LOGIN</button>
+      </form>
+      <a href="index.html" class="login-back">← Back to Portfolio</a>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-dashboard" id="admin-dashboard" style="display:none;">
+
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <button class="admin-sidebar-toggle" id="sidebar-toggle">
+          <span></span>
+          <span></span>
+        </button>
+        <span class="admin-topbar-logo">DALCOVE</span>
+        <span class="admin-topbar-sep">/</span>
+        <span class="admin-topbar-section" id="current-section-label">Dashboard</span>
+      </div>
+      <div class="admin-topbar-right">
+        <span class="admin-save-status" id="save-status">All changes saved</span>
+        <a href="index.html" class="admin-topbar-link" target="_blank">VIEW SITE ↗</a>
+        <button class="admin-logout-btn" id="logout-btn">LOGOUT</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar" id="admin-sidebar">
+        <nav class="admin-nav">
+          <div class="admin-nav-group">
+            <span class="admin-nav-label">OVERVIEW</span>
+            <button class="admin-nav-item is-active" data-section="dashboard">Dashboard</button>
+          </div>
+          <div class="admin-nav-group">
+            <span class="admin-nav-label">SITE</span>
+            <button class="admin-nav-item" data-section="site">Site Settings</button>
+            <button class="admin-nav-item" data-section="hero">Hero</button>
+            <button class="admin-nav-item" data-section="preloader">Preloader</button>
+            <button class="admin-nav-item" data-section="about">About</button>
+            <button class="admin-nav-item" data-section="contact">Contact</button>
+          </div>
+          <div class="admin-nav-group">
+            <span class="admin-nav-label">CONTENT</span>
+            <button class="admin-nav-item" data-section="services">Services</button>
+            <button class="admin-nav-item" data-section="projects">Projects</button>
+            <button class="admin-nav-item" data-section="skills">Skills</button>
+            <button class="admin-nav-item" data-section="gallery">Gallery</button>
+            <button class="admin-nav-item" data-section="visualField">Visual Field</button>
+            <button class="admin-nav-item" data-section="testimonials">Testimonials</button>
+          </div>
+          <div class="admin-nav-group">
+            <span class="admin-nav-label">RESOURCES</span>
+            <button class="admin-nav-item" data-section="tools">Tools</button>
+            <button class="admin-nav-item" data-section="repositories">Repositories</button>
+            <button class="admin-nav-item" data-section="library">Library</button>
+            <button class="admin-nav-item" data-section="didYouKnow">Did You Know</button>
+            <button class="admin-nav-item" data-section="resourcesHero">Resources Hero</button>
+          </div>
+          <div class="admin-nav-group">
+            <span class="admin-nav-label">MEDIA</span>
+            <button class="admin-nav-item" data-section="images">Images</button>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="admin-content" id="admin-content">
+        <!-- Content rendered by JS -->
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Image Picker Modal -->
+  <div class="image-modal" id="image-modal" style="display:none;">
+    <div class="image-modal-backdrop" id="image-modal-backdrop"></div>
+    <div class="image-modal-panel">
+      <div class="image-modal-header">
+        <h3>Select Image</h3>
+        <button class="image-modal-close" id="image-modal-close">×</button>
+      </div>
+      <div class="image-modal-upload">
+        <div class="upload-zone" id="upload-zone">
+          <span>Drop image here or click to upload</span>
+          <input type="file" id="upload-input" accept="image/*" style="display:none;">
+        </div>
+      </div>
+      <div class="image-modal-grid" id="image-modal-grid">
+        <!-- Images rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
