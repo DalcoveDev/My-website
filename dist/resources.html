@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Hub — DALCOVE</title>
+  <meta name="description" content="A collection of tools, discoveries, repositories, and resources curated by Ingabire Dalcove.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/resources-Byy73WIc.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/ScrollTrigger-DfB0rD9m.js">
+  <link rel="stylesheet" crossorigin href="/assets/ScrollTrigger-BJPlhVet.css">
+  <link rel="stylesheet" crossorigin href="/assets/resources-CHpKnKad.css">
+</head>
+<body class="page-resources">
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-label"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">DALCOVE</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" data-cursor="VIEW">Home</a></li>
+      <li><a href="index.html#about" data-cursor="VIEW">About</a></li>
+      <li><a href="index.html#projects" data-cursor="VIEW">Projects</a></li>
+      <li><a href="index.html#contact" data-cursor="VIEW">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Resource Hub Page -->
+  <main class="rh-page">
+
+    <!-- ===== HERO / EDITORIAL INTRO ===== -->
+    <header class="rh-hero" id="rh-hero">
+      <div class="rh-hero-inner">
+        <div class="rh-hero-eyebrow">
+          <span class="rh-hero-eyebrow-item">DALCOVE</span>
+          <span class="rh-hero-eyebrow-sep">/</span>
+          <span class="rh-hero-eyebrow-item">DIGITAL ARCHIVE</span>
+          <span class="rh-hero-eyebrow-sep">/</span>
+          <span class="rh-hero-eyebrow-item">2026</span>
+        </div>
+        <h1 class="rh-hero-title" data-cursor="EXPLORE">RESOURCES</h1>
+        <p class="rh-hero-desc">A curated collection of tools, knowledge, experiments and references that shape the way I build digital experiences.</p>
+        <div class="rh-hero-meta">
+          <div class="rh-hero-meta-item">
+            <span class="rh-hero-meta-label">TOOLS</span>
+            <span class="rh-hero-meta-value">08</span>
+          </div>
+          <div class="rh-hero-meta-item">
+            <span class="rh-hero-meta-label">KNOWLEDGE</span>
+            <span class="rh-hero-meta-value">05</span>
+          </div>
+          <div class="rh-hero-meta-item">
+            <span class="rh-hero-meta-label">REPOSITORIES</span>
+            <span class="rh-hero-meta-value">03</span>
+          </div>
+          <div class="rh-hero-meta-item">
+            <span class="rh-hero-meta-label">REFERENCES</span>
+            <span class="rh-hero-meta-value">08</span>
+          </div>
+        </div>
+        <div class="rh-hero-scroll">
+          <span>SCROLL</span>
+          <svg width="1" height="60"><line x1="0.5" y1="0" x2="0.5" y2="60" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== TOOLS SECTION ===== -->
+    <section class="rh-section rh-tools" id="rh-tools">
+      <div class="rh-section-inner">
+        <div class="rh-section-header">
+          <span class="rh-section-index">01</span>
+          <h2 class="rh-section-title">TOOLS</h2>
+          <span class="rh-section-subtitle">SELECTED DEVELOPMENT &amp; DESIGN SOFTWARE</span>
+        </div>
+        <div class="rh-tools-list" id="rh-tools-list"></div>
+        <div class="rh-tools-expanded" id="rh-tools-expanded">
+          <div class="rh-tools-expanded-inner">
+            <div class="rh-tools-expanded-header">
+              <span class="rh-section-index">01</span>
+              <span class="rh-section-subtitle">ADDITIONAL TOOLS</span>
+              <button class="rh-close" id="rh-tools-close" data-cursor="VIEW">
+                <span>←</span>
+                <span>CLOSE</span>
+              </button>
+            </div>
+            <div class="rh-tools-expanded-list" id="rh-tools-expanded-list"></div>
+          </div>
+        </div>
+        <div class="rh-tools-footer">
+          <button class="rh-view-more" id="rh-tools-view-more" data-cursor="VIEW">
+            <span>VIEW MORE</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DID YOU KNOW SECTION ===== -->
+    <section class="rh-section rh-did-you-know" id="rh-did-you-know">
+      <div class="rh-section-inner">
+        <div class="rh-dyk-layout">
+          <div class="rh-dyk-left">
+            <h2 class="rh-dyk-title">DID<br>YOU<br>KNOW?</h2>
+          </div>
+          <div class="rh-dyk-center">
+            <div class="rh-dyk-viewer" id="rh-dyk-viewer">
+              <div class="rh-dyk-active" id="rh-dyk-active"></div>
+            </div>
+          </div>
+          <div class="rh-dyk-right">
+            <div class="rh-dyk-controls">
+              <button class="rh-dyk-btn" id="rh-dyk-prev" data-cursor="VIEW">
+                <span>← PREVIOUS</span>
+              </button>
+              <span class="rh-dyk-progress" id="rh-dyk-progress">01 / 05</span>
+              <button class="rh-dyk-btn" id="rh-dyk-next" data-cursor="VIEW">
+                <span>NEXT →</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REPOSITORIES SECTION ===== -->
+    <section class="rh-section rh-repositories" id="rh-repositories">
+      <div class="rh-section-inner">
+        <div class="rh-section-header">
+          <span class="rh-section-index">02</span>
+          <h2 class="rh-section-title">REPOSITORIES</h2>
+          <span class="rh-section-subtitle">SELECTED DIGITAL WORK / SOURCE ARCHIVE</span>
+        </div>
+        <div class="rh-repos-list" id="rh-repos-list"></div>
+      </div>
+    </section>
+
+    <!-- ===== RESOURCES / REFERENCES SECTION ===== -->
+    <section class="rh-section rh-resources" id="rh-resources">
+      <div class="rh-section-inner">
+        <div class="rh-section-header">
+          <span class="rh-section-index">03</span>
+          <h2 class="rh-section-title">REFERENCES</h2>
+          <span class="rh-section-subtitle">A SMALL INDEX OF PLACES I USE TO LEARN, BUILD, DESIGN AND EXPLORE</span>
+        </div>
+        <div class="rh-filters" id="rh-filters">
+          <button class="rh-filter-btn is-active" data-filter="all" data-cursor="FILTER">ALL</button>
+          <button class="rh-filter-btn" data-filter="development" data-cursor="FILTER">DEVELOPMENT</button>
+          <button class="rh-filter-btn" data-filter="design" data-cursor="FILTER">DESIGN</button>
+          <button class="rh-filter-btn" data-filter="media" data-cursor="FILTER">MEDIA</button>
+          <button class="rh-filter-btn" data-filter="learning" data-cursor="FILTER">LEARNING</button>
+          <button class="rh-filter-btn" data-filter="open-source" data-cursor="FILTER">OPEN SOURCE</button>
+        </div>
+        <div class="rh-resources-list" id="rh-resources-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>&copy; 2026 Ingabire Dalcove. All rights reserved.</span>
+      <a href="index.html" class="footer-back" data-cursor="VIEW">← Back to Portfolio</a>
+    </div>
+  </footer>
+
+</body>
+</html>

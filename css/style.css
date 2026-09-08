@@ -281,7 +281,7 @@ input, textarea {
 
 .nav-links {
   display: flex;
-  gap: var(--space-md);
+  gap: 1.5rem;
 }
 
 .nav-links a {

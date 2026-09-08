@@ -110,7 +110,7 @@ function initPreloader() {
     const subEl = preloader.querySelector('.preloader-sub');
 
     if (prefersReducedMotion()) {
-      gsap.set(preloader, { opacity: 0 });
+      gsap.set(preloader, { opacity: 0, pointerEvents: 'none' });
       document.body.classList.remove('loading');
       resolve();
       return;
@@ -144,6 +144,7 @@ function initPreloader() {
         opacity: 0,
         duration: 0.6,
         ease: 'power2.inOut',
+        onComplete: () => { preloader.style.pointerEvents = 'none'; }
       }, '+=0.3');
   });
 }
