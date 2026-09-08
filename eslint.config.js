@@ -31,6 +31,6 @@ export default [
     },
   },
   {
-    ignores: ["dist/**", "node_modules/**", "api/**"],
+    ignores: ["dist/**", "node_modules/**", "backend/**"],
   },
 ];
