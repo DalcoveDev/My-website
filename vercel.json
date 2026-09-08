@@ -1,8 +1,11 @@
 {
-  "installCommand": "npm install && chmod +x node_modules/.bin/vite node_modules/.bin/esbuild",
+  "installCommand": "npm install",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin/(.*)", "destination": "/admin.html" },
+    { "source": "/((?!assets/|api/).*)", "destination": "/index.html" }
   ]
 }
