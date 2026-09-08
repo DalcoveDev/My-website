@@ -9,14 +9,6 @@ import { loadContent, getItems } from './content-loader.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-/* --- GLOBAL CONFIG --- */
-const CONFIG = {
-  ease: 'power3.out',
-  easeIn: 'power3.in',
-  easeInOut: 'power3.inOut',
-  duration: 1,
-  stagger: 0.08,
-};
 
 /* --- UTILITIES --- */
 
@@ -45,7 +37,6 @@ function initCursor() {
   if (isTouchDevice()) return;
 
   const cursor = document.getElementById('cursor');
-  const dot = cursor.querySelector('.cursor-dot');
   const label = cursor.querySelector('.cursor-label');
   let mouseX = 0, mouseY = 0;
 
@@ -287,7 +278,7 @@ async function refreshServicesData() {
   try {
     const loaded = getItems('services');
     if (loaded && loaded.length > 0) servicesData = loaded;
-  } catch {}
+  } catch (_) { /* offline fallback */ }
 }
 
 function renderServiceItem(service, index) {
@@ -574,7 +565,7 @@ async function refreshTestimonialsData() {
   try {
     const loaded = getItems('testimonials');
     if (loaded && loaded.length > 0) testimonialsData = loaded;
-  } catch {}
+  } catch (_) { /* offline fallback */ }
 }
 
 function renderTestimonial(data) {
@@ -716,7 +707,7 @@ function initContact() {
 }
 
 /* --- SKILLS DATA --- */
-let skillsData = {
+const skillsData = {
   languages: [
     { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / Backend / Full-stack" },
     { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", experience: "ADD EXPERIENCE", usedFor: "Automation, data processing, scripting", extra: "Backend / Automation" },
@@ -752,7 +743,7 @@ async function refreshSkillsData() {
       skillsData.frameworks = loaded.filter(s => s.category === 'frameworks');
       skillsData.tools = loaded.filter(s => s.category === 'tools');
     }
-  } catch {}
+  } catch (_) { /* offline fallback */ }
 }
 
 /* --- SKILLS --- */

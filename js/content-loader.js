@@ -135,7 +135,7 @@ export async function loadContent() {
     loadedContent = data;
     cacheContent(data);
     return loadedContent;
-  } catch (err) {
+  } catch (_) {
     loadedContent = FALLBACK_DATA;
     return loadedContent;
   }

@@ -8,15 +8,6 @@ import { loadContent, getItems } from './content-loader.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* --- GLOBAL CONFIG --- */
-const CONFIG = {
-  ease: 'power3.out',
-  easeIn: 'power3.in',
-  easeInOut: 'power3.inOut',
-  duration: 1,
-  stagger: 0.08,
-};
-
 /* --- UTILITIES --- */
 function isTouchDevice() {
   return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -31,7 +22,6 @@ function initCursor() {
   if (isTouchDevice()) return;
 
   const cursor = document.getElementById('cursor');
-  const dot = cursor.querySelector('.cursor-dot');
   const label = cursor.querySelector('.cursor-label');
   let mouseX = 0, mouseY = 0;
 
@@ -75,7 +65,7 @@ function initNav() {
 }
 
 /* --- RESOURCE HUB DATA --- */
-let resourceHubData = {
+const resourceHubData = {
   tools: [
     { name: "VS Code", category: "Development", description: "A lightweight but powerful source code editor.", whyUseful: "My primary code editor with extensive extension support.", url: "https://code.visualstudio.com" },
     { name: "Figma", category: "Design", description: "A collaborative interface design tool.", whyUseful: "Essential for UI/UX design and prototyping.", url: "https://www.figma.com" },
@@ -120,7 +110,7 @@ async function refreshResourceHubData() {
     if (loadedDYK.length > 0) resourceHubData.didYouKnow = loadedDYK;
     if (loadedRepos.length > 0) resourceHubData.repositories = loadedRepos;
     if (loadedLib.length > 0) resourceHubData.library = loadedLib;
-  } catch {}
+  } catch (_) { /* offline fallback */ }
 }
 
 /* --- RESOURCE HUB --- */

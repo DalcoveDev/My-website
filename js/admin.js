@@ -67,7 +67,7 @@ function initLoginForm() {
       localStorage.setItem('admin_token', authToken);
       showDashboard();
       loadContent();
-    } catch (err) {
+    } catch (_) {
       errorEl.textContent = 'Cannot connect to server';
     }
   });
@@ -101,7 +101,7 @@ async function loadContent() {
 
     contentData = await res.json();
     renderSection(currentSection);
-  } catch (err) {
+  } catch (_) {
     contentData = getDefaultContent();
     renderSection(currentSection);
   }
@@ -439,7 +439,7 @@ function renderItemsList(container, section, title, fields) {
   initItemCards(container, section, fields);
 }
 
-function renderItemCard(item, index, fields, section) {
+function renderItemCard(item, index, fields, _section) {
   const titleField = fields.find(f => f.isTitle);
   const titleValue = titleField ? getNestedValue(item, titleField.key) : `Item ${index + 1}`;
 
@@ -705,7 +705,7 @@ async function handleImageUpload(files) {
       if (res.ok) {
         contentData.images.push({ filename: data.filename, alt: '', section: '' });
       }
-    } catch (err) {
+    } catch (_) {
       alert(`Upload failed for ${file.name}`);
     }
   }
@@ -718,10 +718,10 @@ async function handleImageUpload(files) {
    ============================================ */
 
 function initImageModal() {
-  const modal = document.getElementById('image-modal');
+  const _modal = document.getElementById('image-modal');
   const backdrop = document.getElementById('image-modal-backdrop');
   const closeBtn = document.getElementById('image-modal-close');
-  const grid = document.getElementById('image-modal-grid');
+  const _grid = document.getElementById('image-modal-grid');
   const uploadZone = document.getElementById('upload-zone');
   const uploadInput = document.getElementById('upload-input');
 
