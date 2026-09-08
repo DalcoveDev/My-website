@@ -4,6 +4,7 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { loadContent, getItems } from './content-loader.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,174 +75,53 @@ function initNav() {
 }
 
 /* --- RESOURCE HUB DATA --- */
-const resourceHubData = {
+let resourceHubData = {
   tools: [
-    {
-      name: "VS Code",
-      category: "Development",
-      description: "A lightweight but powerful source code editor.",
-      whyUseful: "My primary code editor with extensive extension support.",
-      url: "https://code.visualstudio.com"
-    },
-    {
-      name: "Figma",
-      category: "Design",
-      description: "A collaborative interface design tool.",
-      whyUseful: "Essential for UI/UX design and prototyping.",
-      url: "https://www.figma.com"
-    },
-    {
-      name: "GitHub",
-      category: "Development",
-      description: "A platform for version control and collaboration.",
-      whyUseful: "Used for all my project repositories and collaboration.",
-      url: "https://github.com"
-    },
-    {
-      name: "Vite",
-      category: "Development",
-      description: "A fast build tool for modern web projects.",
-      whyUseful: "Lightning fast development server and build tool.",
-      url: "https://vitejs.dev"
-    },
-    {
-      name: "GSAP",
-      category: "Development",
-      description: "GreenSock Animation Platform for web animations.",
-      whyUseful: "The animation library I use for cinematic experiences.",
-      url: "https://greensock.com/gsap"
-    },
-    {
-      name: "Blender",
-      category: "Design",
-      description: "A free and open-source 3D creation suite.",
-      whyUseful: "For 3D modeling and creative technology projects.",
-      url: "https://www.blender.org"
-    },
-    {
-      name: "Notion",
-      category: "Productivity",
-      description: "A connected workspace for notes, tasks, and wikis.",
-      whyUseful: "Perfect for organizing projects and documentation.",
-      url: "https://www.notion.so"
-    },
-    {
-      name: "Terminal",
-      category: "Development",
-      description: "Command-line interface for system operations.",
-      whyUseful: "Essential for Git, package management, and scripting.",
-      url: ""
-    }
+    { name: "VS Code", category: "Development", description: "A lightweight but powerful source code editor.", whyUseful: "My primary code editor with extensive extension support.", url: "https://code.visualstudio.com" },
+    { name: "Figma", category: "Design", description: "A collaborative interface design tool.", whyUseful: "Essential for UI/UX design and prototyping.", url: "https://www.figma.com" },
+    { name: "GitHub", category: "Development", description: "A platform for version control and collaboration.", whyUseful: "Used for all my project repositories and collaboration.", url: "https://github.com" },
+    { name: "Vite", category: "Development", description: "A fast build tool for modern web projects.", whyUseful: "Lightning fast development server and build tool.", url: "https://vitejs.dev" },
+    { name: "GSAP", category: "Development", description: "GreenSock Animation Platform for web animations.", whyUseful: "The animation library I use for cinematic experiences.", url: "https://greensock.com/gsap" },
+    { name: "Blender", category: "Design", description: "A free and open-source 3D creation suite.", whyUseful: "For 3D modeling and creative technology projects.", url: "https://www.blender.org" },
+    { name: "Notion", category: "Productivity", description: "A connected workspace for notes, tasks, and wikis.", whyUseful: "Perfect for organizing projects and documentation.", url: "https://www.notion.so" },
+    { name: "Terminal", category: "Development", description: "Command-line interface for system operations.", whyUseful: "Essential for Git, package management, and scripting.", url: "" },
   ],
   didYouKnow: [
-    {
-      id: 1,
-      content: "The first computer bug was an actual bug — a moth found trapped in a Harvard Mark II computer in 1947.",
-      category: "Technology History",
-      date: "2026-01-15"
-    },
-    {
-      id: 2,
-      content: "JavaScript was created in just 10 days by Brendan Eich in 1995, yet it became the most widely used programming language in the world.",
-      category: "Development",
-      date: "2026-02-10"
-    },
-    {
-      id: 3,
-      content: "The first website ever made is still online. It was created by Tim Berners-Lee at CERN in 1991.",
-      category: "Web Development",
-      date: "2026-03-05"
-    },
-    {
-      id: 4,
-      content: "CSS was first proposed by Håkon Wium Lie in 1994, and it took until 1996 for it to become a W3C recommendation.",
-      category: "Web Development",
-      date: "2026-04-20"
-    },
-    {
-      id: 5,
-      content: "The average webpage in 2025 weighs over 2MB, compared to just 14KB for the first website in 1991.",
-      category: "Web Development",
-      date: "2026-05-12"
-    }
+    { id: 1, content: "The first computer bug was an actual bug — a moth found trapped in a Harvard Mark II computer in 1947.", category: "Technology History", date: "2026-01-15" },
+    { id: 2, content: "JavaScript was created in just 10 days by Brendan Eich in 1995, yet it became the most widely used programming language in the world.", category: "Development", date: "2026-02-10" },
+    { id: 3, content: "The first website ever made is still online. It was created by Tim Berners-Lee at CERN in 1991.", category: "Web Development", date: "2026-03-05" },
+    { id: 4, content: "CSS was first proposed by Håkon Wium Lie in 1994, and it took until 1996 for it to become a W3C recommendation.", category: "Web Development", date: "2026-04-20" },
+    { id: 5, content: "The average webpage in 2025 weighs over 2MB, compared to just 14KB for the first website in 1991.", category: "Web Development", date: "2026-05-12" },
   ],
   repositories: [
-    {
-      name: "Portfolio Website",
-      description: "A cinematic digital portfolio showcasing creative technology and web development work.",
-      tags: ["HTML", "CSS", "JavaScript", "GSAP"],
-      status: "Active",
-      github: "https://github.com/dalcove",
-      demo: ""
-    },
-    {
-      name: "Interactive Data Platform",
-      description: "A real-time data visualization platform with scroll-driven narratives.",
-      tags: ["React", "D3.js", "Node.js"],
-      status: "In Development",
-      github: "https://github.com/dalcove",
-      demo: ""
-    },
-    {
-      name: "Digital Art Exhibition",
-      description: "A curated online exhibition platform for digital artworks.",
-      tags: ["HTML/CSS", "GSAP", "Canvas"],
-      status: "Completed",
-      github: "https://github.com/dalcove",
-      demo: ""
-    }
+    { name: "Portfolio Website", description: "A cinematic digital portfolio showcasing creative technology and web development work.", tags: ["HTML", "CSS", "JavaScript", "GSAP"], status: "Active", github: "https://github.com/dalcove", demo: "" },
+    { name: "Interactive Data Platform", description: "A real-time data visualization platform with scroll-driven narratives.", tags: ["React", "D3.js", "Node.js"], status: "In Development", github: "https://github.com/dalcove", demo: "" },
+    { name: "Digital Art Exhibition", description: "A curated online exhibition platform for digital artworks.", tags: ["HTML/CSS", "GSAP", "Canvas"], status: "Completed", github: "https://github.com/dalcove", demo: "" },
   ],
   library: [
-    {
-      name: "MDN Web Docs",
-      category: "Documentation",
-      description: "Comprehensive documentation for web technologies including HTML, CSS, and JavaScript.",
-      url: "https://developer.mozilla.org"
-    },
-    {
-      name: "GSAP Documentation",
-      category: "Development",
-      description: "Official documentation for GreenSock Animation Platform.",
-      url: "https://greensock.com/docs"
-    },
-    {
-      name: "Awwwards",
-      category: "Design",
-      description: "A platform showcasing the best in web design and development.",
-      url: "https://www.awwwards.com"
-    },
-    {
-      name: "CSS-Tricks",
-      category: "Development",
-      description: "Articles, tutorials, and techniques for web developers.",
-      url: "https://css-tricks.com"
-    },
-    {
-      name: "Coursera",
-      category: "Learning",
-      description: "Online courses from top universities and companies.",
-      url: "https://www.coursera.org"
-    },
-    {
-      name: "GitHub Explore",
-      category: "Open Source",
-      description: "Discover open source projects and repositories.",
-      url: "https://github.com/explore"
-    },
-    {
-      name: "Behance",
-      category: "Design",
-      description: "A platform for creative professionals to showcase their work.",
-      url: "https://www.behance.net"
-    },
-    {
-      name: "freeCodeCamp",
-      category: "Learning",
-      description: "Free coding courses and certifications.",
-      url: "https://www.freecodecamp.org"
-    }
+    { name: "MDN Web Docs", category: "Documentation", description: "Comprehensive documentation for web technologies including HTML, CSS, and JavaScript.", url: "https://developer.mozilla.org" },
+    { name: "GSAP Documentation", category: "Development", description: "Official documentation for GreenSock Animation Platform.", url: "https://greensock.com/docs" },
+    { name: "Awwwards", category: "Design", description: "A platform showcasing the best in web design and development.", url: "https://www.awwwards.com" },
+    { name: "CSS-Tricks", category: "Development", description: "Articles, tutorials, and techniques for web developers.", url: "https://css-tricks.com" },
+    { name: "Coursera", category: "Learning", description: "Online courses from top universities and companies.", url: "https://www.coursera.org" },
+    { name: "GitHub Explore", category: "Open Source", description: "Discover open source projects and repositories.", url: "https://github.com/explore" },
+    { name: "Behance", category: "Design", description: "A platform for creative professionals to showcase their work.", url: "https://www.behance.net" },
+    { name: "freeCodeCamp", category: "Learning", description: "Free coding courses and certifications.", url: "https://www.freecodecamp.org" },
   ]
 };
+
+async function refreshResourceHubData() {
+  try {
+    const loadedTools = getItems('tools');
+    const loadedDYK = getItems('didYouKnow');
+    const loadedRepos = getItems('repositories');
+    const loadedLib = getItems('library');
+    if (loadedTools.length > 0) resourceHubData.tools = loadedTools;
+    if (loadedDYK.length > 0) resourceHubData.didYouKnow = loadedDYK;
+    if (loadedRepos.length > 0) resourceHubData.repositories = loadedRepos;
+    if (loadedLib.length > 0) resourceHubData.library = loadedLib;
+  } catch {}
+}
 
 /* --- RESOURCE HUB --- */
 function initResourceHub() {
@@ -714,6 +594,9 @@ function initScrollAnimations() {
 
 /* --- INIT --- */
 async function init() {
+  await loadContent();
+  await refreshResourceHubData();
+
   initNav();
   initCursor();
   initResourceHub();

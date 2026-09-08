@@ -5,6 +5,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { loadContent, getItems } from './content-loader.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -271,7 +272,7 @@ function initAbout() {
 }
 
 /* --- SERVICES --- */
-const servicesData = [
+let servicesData = [
   { title: 'Software Development', desc: 'Custom software solutions built with modern technologies and thoughtful architecture.' },
   { title: 'Web Development', desc: 'Performant, responsive, and visually intentional web experiences.' },
   { title: 'Digital Media', desc: 'Creative media production blending technology with visual storytelling.' },
@@ -281,6 +282,13 @@ const servicesData = [
   { title: 'Content & Media Management', desc: 'Strategic content systems and media pipeline optimization.' },
   { title: 'Digital Solutions', desc: 'End-to-end digital strategy, implementation, and deployment.' },
 ];
+
+async function refreshServicesData() {
+  try {
+    const loaded = getItems('services');
+    if (loaded && loaded.length > 0) servicesData = loaded;
+  } catch {}
+}
 
 function renderServiceItem(service, index) {
   return `
@@ -544,7 +552,7 @@ function initGallery() {
 }
 
 /* --- TESTIMONIALS --- */
-const testimonialsData = [
+let testimonialsData = [
   {
     quote: 'Dalcove brings a rare combination of technical precision and creative vision. Every project feels like a work of art.',
     name: 'Sarah Mensah',
@@ -561,6 +569,13 @@ const testimonialsData = [
     role: 'Curator, Digital Arts Festival',
   },
 ];
+
+async function refreshTestimonialsData() {
+  try {
+    const loaded = getItems('testimonials');
+    if (loaded && loaded.length > 0) testimonialsData = loaded;
+  } catch {}
+}
 
 function renderTestimonial(data) {
   return `
@@ -701,7 +716,7 @@ function initContact() {
 }
 
 /* --- SKILLS DATA --- */
-const skillsData = {
+let skillsData = {
   languages: [
     { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / Backend / Full-stack" },
     { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", experience: "ADD EXPERIENCE", usedFor: "Automation, data processing, scripting", extra: "Backend / Automation" },
@@ -728,6 +743,17 @@ const skillsData = {
     { name: "Vite", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Frontend build tooling and dev server", extra: "Build / Tooling" },
   ],
 };
+
+async function refreshSkillsData() {
+  try {
+    const loaded = getItems('skills');
+    if (loaded && loaded.length > 0) {
+      skillsData.languages = loaded.filter(s => s.category === 'languages');
+      skillsData.frameworks = loaded.filter(s => s.category === 'frameworks');
+      skillsData.tools = loaded.filter(s => s.category === 'tools');
+    }
+  } catch {}
+}
 
 /* --- SKILLS --- */
 function initSkills() {
@@ -916,6 +942,11 @@ function initContactForm() {
 
 /* --- INIT --- */
 async function init() {
+  await loadContent();
+  await refreshServicesData();
+  await refreshTestimonialsData();
+  await refreshSkillsData();
+
   await initPreloader();
   initNav();
   initCursor();
