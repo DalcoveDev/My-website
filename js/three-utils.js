@@ -60,3 +60,27 @@ export function createWebGLFallback(container) {
   container.appendChild(fallback);
   return fallback;
 }
+
+export function cleanupRenderer(renderer, scene) {
+  if (renderer) {
+    renderer.dispose();
+    renderer.forceContextLoss();
+    const canvas = renderer.domElement;
+    if (canvas && canvas.parentNode) {
+      canvas.parentNode.removeChild(canvas);
+    }
+  }
+
+  if (scene) {
+    scene.traverse((obj) => {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) {
+        if (Array.isArray(obj.material)) {
+          obj.material.forEach(m => m.dispose());
+        } else {
+          obj.material.dispose();
+        }
+      }
+    });
+  }
+}
