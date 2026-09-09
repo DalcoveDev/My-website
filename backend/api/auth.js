@@ -15,15 +15,34 @@ export default async function handler(req, res) {
 
   const { password } = req.body;
 
-  if (!password) {
-    return res.status(400).json({ error: 'Password required' });
+  if (!password || typeof password !== 'string') {
+    return res.status(400).json({ error: 'Password is required and must be a string' });
   }
 
-  if (password !== process.env.ADMIN_PASSWORD) {
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters' });
+  }
+
+  if (password.length > 128) {
+    return res.status(400).json({ error: 'Password must be less than 128 characters' });
+  }
+
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  
+  if (!adminPassword) {
+    console.error('ADMIN_PASSWORD environment variable not set');
+    return res.status(500).json({ error: 'Authentication not configured' });
+  }
+
+  if (password !== adminPassword) {
     return res.status(401).json({ error: 'Invalid password' });
   }
 
   const token = Buffer.from(`admin:${Date.now()}`).toString('base64');
 
-  return res.status(200).json({ token, message: 'Login successful' });
+  return res.status(200).json({ 
+    token, 
+    message: 'Login successful',
+    expiresIn: 24 * 60 * 60 * 1000 
+  });
 }
