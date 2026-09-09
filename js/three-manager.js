@@ -107,3 +107,46 @@ export function registerScene(id, config) {
   scenes.set(id, sceneData);
   return sceneData;
 }
+
+export function activateScene(id) {
+  const sceneData = scenes.get(id);
+  if (sceneData) {
+    sceneData.active = true;
+  }
+}
+
+export function deactivateScene(id) {
+  const sceneData = scenes.get(id);
+  if (sceneData) {
+    sceneData.active = false;
+  }
+}
+
+export function destroyScene(id) {
+  const sceneData = scenes.get(id);
+  if (!sceneData) return;
+
+  if (sceneData.destroy) {
+    sceneData.destroy(sceneData.scene, sceneData.camera, sceneData.renderer);
+  }
+
+  cleanupRenderer(sceneData.renderer, sceneData.scene);
+  scenes.delete(id);
+}
+
+export function getScene(id) {
+  return scenes.get(id) || null;
+}
+
+export function destroyAllScenes() {
+  scenes.forEach((_, id) => destroyScene(id));
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+  isInitialized = false;
+}
+
+export function getMousePosition() {
+  return { x: mouseX, y: mouseY };
+}
