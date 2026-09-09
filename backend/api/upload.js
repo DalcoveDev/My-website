@@ -1,5 +1,8 @@
-import { writeFile, readdir } from 'fs/promises';
+import { writeFile, readdir, stat } from 'fs/promises';
 import { join, extname } from 'path';
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
 
 function verifyAuth(req) {
   const auth = req.headers.authorization;
@@ -11,6 +14,10 @@ function verifyAuth(req) {
   } catch {
     return false;
   }
+}
+
+function sanitizeFilename(filename) {
+  return filename.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/_{2,}/g, '_');
 }
 
 export default async function handler(req, res) {
@@ -40,9 +47,16 @@ export default async function handler(req, res) {
 
     try {
       const chunks = [];
+      let totalSize = 0;
+      
       for await (const chunk of req) {
+        totalSize += chunk.length;
+        if (totalSize > MAX_FILE_SIZE) {
+          return res.status(413).json({ error: 'File too large. Maximum size is 5MB' });
+        }
         chunks.push(chunk);
       }
+      
       const body = Buffer.concat(chunks).toString();
       const boundary = req.headers['content-type']?.split('boundary=')[1];
 
@@ -75,17 +89,27 @@ export default async function handler(req, res) {
       }
 
       const ext = extname(filename).toLowerCase();
-      const allowed = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-      if (!allowed.includes(ext)) {
-        return res.status(400).json({ error: 'File type not allowed' });
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        return res.status(400).json({ 
+          error: 'File type not allowed',
+          allowed: ALLOWED_EXTENSIONS
+        });
       }
 
-      const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+      if (fileData.length > MAX_FILE_SIZE) {
+        return res.status(413).json({ error: 'File too large. Maximum size is 5MB' });
+      }
+
+      const safeName = sanitizeFilename(filename);
       const uploadPath = join(process.cwd(), 'images', safeName);
 
       await writeFile(uploadPath, fileData);
 
-      return res.status(200).json({ filename: safeName, message: 'Upload successful' });
+      return res.status(200).json({ 
+        filename: safeName, 
+        size: fileData.length,
+        message: 'Upload successful' 
+      });
     } catch (error) {
       return res.status(500).json({ error: 'Upload failed', details: error.message });
     }
