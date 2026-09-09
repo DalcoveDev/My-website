@@ -49,3 +49,14 @@ export function getMaxPixelRatio() {
   if (window.innerWidth < 768) return 1.5;
   return Math.min(window.devicePixelRatio, 2);
 }
+
+export function createWebGLFallback(container) {
+  const fallback = document.createElement('div');
+  fallback.className = 'webgl-fallback';
+  fallback.innerHTML = `
+    <div class="webgl-fallback-bg"></div>
+  `;
+  fallback.setAttribute('aria-hidden', 'true');
+  container.appendChild(fallback);
+  return fallback;
+}
