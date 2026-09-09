@@ -7,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { loadContent, getItems } from './content-loader.js';
 import { init3DScenes } from './three-scroll-integration.js';
-import { init3DScenes } from './three-scroll-integration.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
