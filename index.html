@@ -41,7 +41,7 @@
       <li><a href="#gallery" data-cursor="VIEW">Gallery</a></li>
       <li><a href="#testimonials" data-cursor="VIEW">Testimonials</a></li>
       <li><a href="resources.html" data-cursor="VIEW">Resources</a></li>
-      <li><a href="#contact" data-cursor="VIEW">Contact</a></li>
+      <li><a href="#contact" class="nav-cta" data-cursor="VIEW">Contact</a></li>
     </ul>
   </nav>
 
@@ -54,16 +54,14 @@
         <div class="hero-bg">
           <div class="hero-grid"></div>
           <div class="hero-grain"></div>
+          <div class="hero-portrait">
+            <img src="images/my image bg removed.png" alt="Ingabire Dalcove portrait">
+          </div>
         </div>
         <div class="hero-deco">
           <span class="deco-char deco-1">&lt;/&gt;</span>
           <span class="deco-char deco-2">{ }</span>
           <span class="deco-char deco-3">( )</span>
-          <span class="deco-char deco-4">;</span>
-          <span class="deco-char deco-5">=&gt;</span>
-          <span class="deco-char deco-6">/**/</span>
-          <span class="deco-char deco-7">0x</span>
-          <span class="deco-char deco-8">[]</span>
         </div>
         <div class="hero-content">
           <h1 class="hero-title" data-cursor="CREATE">
@@ -138,20 +136,14 @@
 
       <!-- Projects Section -->
       <section class="projects" id="projects">
-        <div class="projects-intro">
-          <span class="section-label">03 / Projects</span>
-          <h2 class="projects-intro-title">Selected Work</h2>
-          <div class="projects-scroll-hint">
-            <span>SCROLL TO VIEW PROJECTS</span>
-            <svg class="projects-intro-line" viewBox="0 0 100 2" preserveAspectRatio="none">
-              <line x1="0" y1="1" x2="100" y2="1" stroke="currentColor" stroke-width="0.5"/>
-            </svg>
-          </div>
+        <div class="projects-header">
+          <span class="section-num">03</span>
+          <span class="section-label">Selected Work</span>
         </div>
-
+        <h2 class="projects-title">Featured Projects</h2>
         <div class="projects-stack" id="projects-stack">
-          <!-- Project 01 -->
-          <article class="project-card project-card--editorial" data-project="01">
+          <!-- Project 01 - Large horizontal feature -->
+          <article class="project-card project-card--feature" data-project="01">
             <div class="project-card-inner">
               <div class="project-meta">
                 <span class="project-num">01</span>
@@ -164,7 +156,7 @@
                 <div class="project-tags">
                   <span>GSAP</span><span>SVG</span><span>WebGL</span>
                 </div>
-                <a href="#" class="project-link" data-cursor="VIEW">View Project</a>
+                <a href="#" class="project-link" data-cursor="VIEW">View Project →</a>
               </div>
               <div class="project-visual">
                 <img src="images/1001028575.jpg" alt="Digital Identity System" loading="lazy">
@@ -172,65 +164,65 @@
             </div>
           </article>
 
-          <!-- Project 02 -->
-          <article class="project-card project-card--tech" data-project="02">
+          <!-- Project 02 - Two-column split -->
+          <article class="project-card project-card--split" data-project="02">
             <div class="project-card-inner">
-              <div class="project-meta">
-                <span class="project-num">02</span>
-                <span class="project-year">2025</span>
-                <span class="project-category">Software Development</span>
+              <div class="project-visual">
+                <img src="images/1001028579.jpg" alt="Interactive Data Platform" loading="lazy">
               </div>
-              <div class="project-info">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="project-num">02</span>
+                  <span class="project-year">2025</span>
+                  <span class="project-category">Software Development</span>
+                </div>
                 <h3 class="project-title">Interactive Data Platform</h3>
                 <p class="project-desc">A real-time data visualization platform with cinematic scroll-driven narratives and custom interaction models.</p>
                 <div class="project-tags">
                   <span>React</span><span>D3.js</span><span>Node.js</span>
                 </div>
-                <a href="#" class="project-link" data-cursor="VIEW">View Project</a>
-              </div>
-              <div class="project-visual">
-                <img src="images/1001028579.jpg" alt="Interactive Data Platform" loading="lazy">
+                <a href="#" class="project-link" data-cursor="VIEW">View Project →</a>
               </div>
             </div>
           </article>
 
-          <!-- Project 03 -->
-          <article class="project-card project-card--bold" data-project="03">
+          <!-- Project 03 - Visual dominant -->
+          <article class="project-card project-card--visual" data-project="03">
             <div class="project-card-inner">
-              <div class="project-meta">
-                <span class="project-num">03</span>
-                <span class="project-year">2024</span>
-                <span class="project-category">Interactive Experiences</span>
+              <div class="project-visual project-visual--large">
+                <img src="images/1G4A4069.jpg" alt="Immersive Media Installation" loading="lazy">
               </div>
-              <div class="project-info">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="project-num">03</span>
+                  <span class="project-year">2024</span>
+                  <span class="project-category">Interactive Experiences</span>
+                </div>
                 <h3 class="project-title">Immersive Media Installation</h3>
                 <p class="project-desc">An interactive digital installation blending projection, sound, and motion to create an immersive sensory experience.</p>
                 <div class="project-tags">
                   <span>Three.js</span><span>Web Audio</span><span>Sensors</span>
                 </div>
-                <a href="#" class="project-link" data-cursor="VIEW">View Project</a>
-              </div>
-              <div class="project-visual">
-                <img src="images/1G4A4069.jpg" alt="Immersive Media Installation" loading="lazy">
+                <a href="#" class="project-link" data-cursor="VIEW">View Project →</a>
               </div>
             </div>
           </article>
 
-          <!-- Project 04 -->
-          <article class="project-card project-card--experimental" data-project="04">
+          <!-- Project 04 - Compact with offset -->
+          <article class="project-card project-card--compact" data-project="04">
             <div class="project-card-inner">
-              <div class="project-meta">
-                <span class="project-num">04</span>
-                <span class="project-year">2024</span>
-                <span class="project-category">Web Development</span>
-              </div>
-              <div class="project-info">
+              <div class="project-content">
+                <div class="project-meta">
+                  <span class="project-num">04</span>
+                  <span class="project-year">2024</span>
+                  <span class="project-category">Web Development</span>
+                </div>
                 <h3 class="project-title">Digital Art Exhibition</h3>
                 <p class="project-desc">A curated online exhibition platform for digital artworks, featuring generative layouts and scroll-driven gallery experiences.</p>
                 <div class="project-tags">
                   <span>HTML/CSS</span><span>GSAP</span><span>Canvas</span>
                 </div>
-                <a href="#" class="project-link" data-cursor="VIEW">View Project</a>
+                <a href="#" class="project-link" data-cursor="VIEW">View Project →</a>
               </div>
               <div class="project-visual">
                 <img src="images/1G4A4070.jpg" alt="Digital Art Exhibition" loading="lazy">
@@ -272,20 +264,35 @@
 
       <!-- Skills Section -->
       <section class="skills" id="skills">
-        <div class="skills-header">
-          <span class="section-label">04 / Skills</span>
+        <div class="skills-container">
+          <div class="skills-header">
+            <span class="section-num">04</span>
+            <span class="section-label">Skills</span>
+          </div>
           <h2 class="skills-title">Technologies I Use</h2>
           <p class="skills-subtitle">to build digital experiences</p>
-        </div>
-        <div class="skills-wall" id="skills-wall">
-          <div class="skills-column" id="skills-col-1" data-direction="up" data-speed="1">
-            <div class="skills-track"></div>
-          </div>
-          <div class="skills-column" id="skills-col-2" data-direction="down" data-speed="0.7">
-            <div class="skills-track"></div>
-          </div>
-          <div class="skills-column" id="skills-col-3" data-direction="up" data-speed="1.2">
-            <div class="skills-track"></div>
+          <div class="skills-grid">
+            <div class="skills-category">
+              <div class="skills-category-header">
+                <span class="skills-category-num">01</span>
+                <span class="skills-category-title">Languages</span>
+              </div>
+              <div class="skills-list" id="skills-languages"></div>
+            </div>
+            <div class="skills-category">
+              <div class="skills-category-header">
+                <span class="skills-category-num">02</span>
+                <span class="skills-category-title">Frameworks</span>
+              </div>
+              <div class="skills-list" id="skills-frameworks"></div>
+            </div>
+            <div class="skills-category">
+              <div class="skills-category-header">
+                <span class="skills-category-num">03</span>
+                <span class="skills-category-title">Tools</span>
+              </div>
+              <div class="skills-list" id="skills-tools"></div>
+            </div>
           </div>
         </div>
         <div class="skills-info-panel" id="skills-info-panel">
@@ -307,7 +314,10 @@
       <!-- Gallery Section -->
       <section class="gallery" id="gallery">
         <div class="gallery-container">
-          <span class="section-label">05 / Gallery</span>
+          <div class="gallery-header">
+            <span class="section-num">05</span>
+            <span class="section-label">Gallery</span>
+          </div>
           <h2 class="gallery-title">Visual Works</h2>
           <div class="gallery-grid">
             <div class="gallery-item gallery-item--wide" data-cursor="EXPLORE">
@@ -359,7 +369,10 @@
       <!-- Testimonials Section -->
       <section class="testimonials" id="testimonials">
         <div class="testimonials-container">
-          <span class="section-label">06 / Testimonials</span>
+          <div class="testimonials-header">
+            <span class="section-num">06</span>
+            <span class="section-label">Testimonials</span>
+          </div>
           <h2 class="testimonials-title">Words</h2>
           <div class="testimonial-viewer" id="testimonial-viewer">
             <div class="testimonial-active" id="testimonial-active"></div>
@@ -376,8 +389,13 @@
 
       <!-- Contact Section -->
       <section class="contact" id="contact">
+        <div class="contact-geo contact-geo-1" aria-hidden="true"></div>
+        <div class="contact-geo contact-geo-2" aria-hidden="true"></div>
         <div class="contact-container">
-          <span class="section-label">07 / Contact</span>
+          <div class="contact-header">
+            <span class="section-num">07</span>
+            <span class="section-label">Contact</span>
+          </div>
           <h2 class="contact-title">
             <span>LET'S CREATE</span>
             <span>SOMETHING</span>

@@ -1,5 +1,5 @@
 /* ============================================
-   DALCOVE PORTFOLIO — CENTRALIZED ANIMATION SYSTEM
+   DALCOVE PORTFOLIO — EDITORIAL ANIMATION SYSTEM
    ============================================ */
 
 import { gsap } from 'gsap';
@@ -7,9 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { loadContent, getItems } from './content-loader.js';
 
-
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
 
 /* --- UTILITIES --- */
 
@@ -146,10 +144,11 @@ function initPreloader() {
 function initHero() {
   const titleLine = document.querySelector('.hero-title-line');
   const subtitle = document.querySelector('.hero-subtitle');
+  const portrait = document.querySelector('.hero-portrait');
   const scrollIndicator = document.querySelector('.hero-scroll-indicator');
 
   if (prefersReducedMotion()) {
-    gsap.set([titleLine, subtitle], { opacity: 1 });
+    gsap.set([titleLine, subtitle, portrait], { opacity: 1, y: 0, scale: 1 });
     return;
   }
 
@@ -166,6 +165,13 @@ function initHero() {
     duration: 0.8,
     ease: 'power2.out',
   }, '-=0.5')
+  .to(portrait, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 1.4,
+    ease: 'power2.out',
+  }, '-=0.6')
   .from(scrollIndicator, {
     opacity: 0,
     duration: 0.6,
@@ -342,6 +348,18 @@ function initServices() {
     return;
   }
 
+  /* Services covering About transition */
+  gsap.to('.services', {
+    y: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.services',
+      start: 'top bottom',
+      end: 'top top',
+      scrub: true,
+    }
+  });
+
   gsap.from(label, {
     opacity: 0,
     y: 20,
@@ -387,38 +405,29 @@ function initServices() {
 
 /* --- PROJECTS --- */
 function initProjects() {
-  const intro = document.querySelector('.projects-intro');
-  const introTitle = document.querySelector('.projects-intro-title');
-  const introLabel = document.querySelector('.projects .section-label');
-  const scrollHint = document.querySelector('.projects-scroll-hint');
+  const title = document.querySelector('.projects-title');
+  const label = document.querySelector('.projects .section-label');
   const stack = document.getElementById('projects-stack');
   const cards = document.querySelectorAll('.project-card');
 
   if (prefersReducedMotion()) {
-    gsap.set([introTitle, introLabel, scrollHint, ...cards], { opacity: 1, y: 0 });
+    gsap.set([title, label, ...cards], { opacity: 1, y: 0 });
     return;
   }
 
-  /* Intro animations */
-  gsap.from(introLabel, {
+  gsap.from(label, {
     opacity: 0,
     y: 20,
     duration: 0.8,
-    scrollTrigger: { trigger: intro, start: 'top 70%' }
+    scrollTrigger: { trigger: '.projects', start: 'top 70%' }
   });
 
-  gsap.from(introTitle, {
+  gsap.from(title, {
     opacity: 0,
     y: 40,
     duration: 1,
     ease: 'power2.out',
-    scrollTrigger: { trigger: intro, start: 'top 60%' }
-  });
-
-  gsap.from(scrollHint, {
-    opacity: 0,
-    duration: 0.6,
-    scrollTrigger: { trigger: intro, start: 'top 50%' }
+    scrollTrigger: { trigger: '.projects', start: 'top 60%' }
   });
 
   /* Stacked card-deck system
@@ -500,6 +509,216 @@ function initVisualField() {
       trigger: section,
       start: 'top 70%',
     }
+  });
+}
+
+/* --- SKILLS --- */
+const skillsData = {
+  languages: [
+    { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / Backend / Full-stack" },
+    { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", experience: "ADD EXPERIENCE", usedFor: "Automation, data processing, scripting", extra: "Backend / Automation" },
+    { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", experience: "ADD EXPERIENCE", usedFor: "Systems programming, performance-critical applications", extra: "Systems / Performance" },
+    { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", experience: "ADD EXPERIENCE", usedFor: "Semantic markup and web structure", extra: "Web Fundamentals" },
+    { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", experience: "ADD EXPERIENCE", usedFor: "Visual design, layouts, animations", extra: "Styling / Layout" },
+    { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Type-safe JavaScript development", extra: "Frontend / Backend" },
+  ],
+  frameworks: [
+    { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / UI / Component Architecture" },
+    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Full-stack React applications", extra: "SSR / SSG / Full-stack" },
+    { name: "GSAP", logo: "https://raw.githubusercontent.com/nicedoc/gsap-logo/master/gsap-logo.svg", experience: "ADD EXPERIENCE", usedFor: "Cinematic animations and scroll-driven experiences", extra: "Animation / Scroll / Motion" },
+    { name: "Express", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", experience: "ADD EXPERIENCE", usedFor: "Backend APIs and server-side logic", extra: "Backend / APIs" },
+    { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", experience: "ADD EXPERIENCE", usedFor: "Utility-first styling and rapid UI development", extra: "Styling / Design Systems" },
+    { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Server-side JavaScript runtime", extra: "Backend / Runtime" },
+  ],
+  tools: [
+    { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", experience: "ADD EXPERIENCE", usedFor: "Version control and collaboration", extra: "Version Control" },
+    { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", experience: "ADD EXPERIENCE", usedFor: "Code hosting and collaboration", extra: "Collaboration / CI/CD" },
+    { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", experience: "ADD EXPERIENCE", usedFor: "Relational database management", extra: "Database / SQL" },
+    { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", experience: "ADD EXPERIENCE", usedFor: "Advanced relational database operations", extra: "Database / SQL" },
+    { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", experience: "ADD EXPERIENCE", usedFor: "NoSQL document-based database", extra: "Database / NoSQL" },
+    { name: "PocketBase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pocketbase/pocketbase-original.svg", experience: "ADD EXPERIENCE", usedFor: "Lightweight backend-as-a-service", extra: "Backend / BaaS" },
+    { name: "Vite", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Frontend build tooling and dev server", extra: "Build / Tooling" },
+  ],
+};
+
+async function refreshSkillsData() {
+  try {
+    const loaded = getItems('skills');
+    if (loaded && loaded.length > 0) {
+      skillsData.languages = loaded.filter(s => s.category === 'languages');
+      skillsData.frameworks = loaded.filter(s => s.category === 'frameworks');
+      skillsData.tools = loaded.filter(s => s.category === 'tools');
+    }
+  } catch (_) { /* offline fallback */ }
+}
+
+function createSkillItem(skill) {
+  const item = document.createElement('div');
+  item.className = 'skill-item';
+  item.setAttribute('tabindex', '0');
+  item.setAttribute('role', 'button');
+  item.setAttribute('aria-label', skill.name);
+
+  const logoWrap = document.createElement('div');
+  logoWrap.className = 'skill-logo-wrap';
+
+  const img = document.createElement('img');
+  img.className = 'skill-logo';
+  img.src = skill.logo;
+  img.alt = skill.name;
+  img.loading = 'lazy';
+  img.onerror = () => {
+    img.style.display = 'none';
+    const fallback = document.createElement('span');
+    fallback.className = 'skill-logo-fallback';
+    fallback.textContent = skill.name.charAt(0);
+    logoWrap.appendChild(fallback);
+  };
+
+  logoWrap.appendChild(img);
+  item.appendChild(logoWrap);
+
+  const name = document.createElement('span');
+  name.className = 'skill-name';
+  name.textContent = skill.name;
+  item.appendChild(name);
+
+  return item;
+}
+
+function initSkills() {
+  const grid = document.getElementById('skills-grid');
+  if (!grid) return;
+
+  const categories = [
+    { key: 'languages', num: '01', title: 'Languages', data: skillsData.languages },
+    { key: 'frameworks', num: '02', title: 'Frameworks', data: skillsData.frameworks },
+    { key: 'tools', num: '03', title: 'Tools & Platforms', data: skillsData.tools },
+  ];
+
+  const infoPanel = document.getElementById('skills-info-panel');
+  const infoName = document.getElementById('skills-info-name');
+  const infoExp = document.getElementById('skills-info-exp');
+  const infoUsed = document.getElementById('skills-info-used');
+  const infoExtra = document.getElementById('skills-info-extra');
+  const infoExtraRow = document.getElementById('skills-info-extra-row');
+
+  /* Render categories into the grid */
+  categories.forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'skills-category';
+
+    section.innerHTML = `
+      <div class="skills-category-header">
+        <span class="skills-category-num">${cat.num}</span>
+        <span class="skills-category-title">${cat.title}</span>
+      </div>
+      <div class="skills-list"></div>
+    `;
+
+    const list = section.querySelector('.skills-list');
+    cat.data.forEach((skill, i) => {
+      const item = createSkillItem(skill);
+      item.dataset.skillKey = cat.key;
+      item.dataset.skillIdx = i;
+      list.appendChild(item);
+    });
+
+    grid.appendChild(section);
+  });
+
+  /* Hover interactions */
+  let activeItem = null;
+
+  function showInfo(skill, item) {
+    if (activeItem === item) return;
+    if (activeItem) hideInfo();
+
+    activeItem = item;
+
+    infoName.textContent = skill.name;
+    infoExp.textContent = skill.experience;
+    infoUsed.textContent = skill.usedFor;
+
+    if (skill.extra) {
+      infoExtra.textContent = skill.extra;
+      infoExtraRow.style.display = '';
+    } else {
+      infoExtraRow.style.display = 'none';
+    }
+
+    infoPanel.classList.add('is-visible');
+    item.classList.add('is-active');
+
+    const rect = item.getBoundingClientRect();
+    const panelW = 240;
+    let left = rect.right + 16;
+    let top = rect.top;
+    if (left + panelW > window.innerWidth) left = rect.left - panelW - 16;
+    if (top + 140 > window.innerHeight) top = window.innerHeight - 160;
+    infoPanel.style.left = left + 'px';
+    infoPanel.style.top = top + 'px';
+  }
+
+  function hideInfo() {
+    if (!activeItem) return;
+    activeItem.classList.remove('is-active');
+    activeItem = null;
+    infoPanel.classList.remove('is-visible');
+  }
+
+  /* Event delegation on grid */
+  grid.addEventListener('mouseenter', (e) => {
+    const item = e.target.closest('.skill-item');
+    if (!item) return;
+    const key = item.dataset.skillKey;
+    const idx = parseInt(item.dataset.skillIdx, 10);
+    showInfo(skillsData[key][idx], item);
+  }, true);
+
+  grid.addEventListener('mouseleave', (e) => {
+    const item = e.target.closest('.skill-item');
+    if (item) hideInfo();
+  }, true);
+
+  grid.addEventListener('click', (e) => {
+    const item = e.target.closest('.skill-item');
+    if (!item) { hideInfo(); return; }
+    if (activeItem === item) { hideInfo(); return; }
+    const key = item.dataset.skillKey;
+    const idx = parseInt(item.dataset.skillIdx, 10);
+    showInfo(skillsData[key][idx], item);
+  });
+
+  if (prefersReducedMotion()) return;
+
+  /* Animate categories */
+  document.querySelectorAll('.skills-category').forEach((cat) => {
+    const header = cat.querySelector('.skills-category-header');
+    const items = cat.querySelectorAll('.skill-item');
+
+    gsap.from(header, {
+      opacity: 0,
+      x: -30,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: cat,
+        start: 'top 80%',
+      }
+    });
+
+    gsap.from(items, {
+      opacity: 0,
+      y: 20,
+      duration: 0.5,
+      stagger: 0.05,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: cat,
+        start: 'top 75%',
+      }
+    });
   });
 }
 
@@ -657,7 +876,7 @@ function initContact() {
   const label = document.querySelector('.contact .section-label');
   const formGroups = document.querySelectorAll('.form-group');
   const submitBtn = document.querySelector('.form-submit');
-  const contactDetails = document.querySelectorAll('.contact-detail, .contact-social');
+  const contactDetails = document.querySelectorAll('.contact-detail');
 
   if (prefersReducedMotion()) {
     gsap.set([label, ...titleSpans, ...formGroups, submitBtn, ...contactDetails], { opacity: 1, y: 0 });
@@ -705,213 +924,6 @@ function initContact() {
     ease: 'power2.out',
     scrollTrigger: { trigger: '.contact-info', start: 'top 80%' }
   });
-}
-
-/* --- SKILLS DATA --- */
-const skillsData = {
-  languages: [
-    { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / Backend / Full-stack" },
-    { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", experience: "ADD EXPERIENCE", usedFor: "Automation, data processing, scripting", extra: "Backend / Automation" },
-    { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", experience: "ADD EXPERIENCE", usedFor: "Systems programming, performance-critical applications", extra: "Systems / Performance" },
-    { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", experience: "ADD EXPERIENCE", usedFor: "Semantic markup and web structure", extra: "Web Fundamentals" },
-    { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", experience: "ADD EXPERIENCE", usedFor: "Visual design, layouts, animations", extra: "Styling / Layout" },
-    { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", experience: "ADD EXPERIENCE", usedFor: "Type-safe JavaScript development", extra: "Frontend / Backend" },
-  ],
-  frameworks: [
-    { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", experience: "ADD EXPERIENCE", usedFor: "Interactive web applications", extra: "Frontend / UI / Component Architecture" },
-    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Full-stack React applications", extra: "SSR / SSG / Full-stack" },
-    { name: "GSAP", logo: "https://raw.githubusercontent.com/nicedoc/gsap-logo/master/gsap-logo.svg", experience: "ADD EXPERIENCE", usedFor: "Cinematic animations and scroll-driven experiences", extra: "Animation / Scroll / Motion" },
-    { name: "Express", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", experience: "ADD EXPERIENCE", usedFor: "Backend APIs and server-side logic", extra: "Backend / APIs" },
-    { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", experience: "ADD EXPERIENCE", usedFor: "Utility-first styling and rapid UI development", extra: "Styling / Design Systems" },
-    { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Server-side JavaScript runtime", extra: "Backend / Runtime" },
-  ],
-  tools: [
-    { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", experience: "ADD EXPERIENCE", usedFor: "Version control and collaboration", extra: "Version Control" },
-    { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", experience: "ADD EXPERIENCE", usedFor: "Code hosting and collaboration", extra: "Collaboration / CI/CD" },
-    { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", experience: "ADD EXPERIENCE", usedFor: "Relational database management", extra: "Database / SQL" },
-    { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", experience: "ADD EXPERIENCE", usedFor: "Advanced relational database operations", extra: "Database / SQL" },
-    { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", experience: "ADD EXPERIENCE", usedFor: "NoSQL document-based database", extra: "Database / NoSQL" },
-    { name: "PocketBase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pocketbase/pocketbase-original.svg", experience: "ADD EXPERIENCE", usedFor: "Lightweight backend-as-a-service", extra: "Backend / BaaS" },
-    { name: "Vite", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg", experience: "ADD EXPERIENCE", usedFor: "Frontend build tooling and dev server", extra: "Build / Tooling" },
-  ],
-};
-
-async function refreshSkillsData() {
-  try {
-    const loaded = getItems('skills');
-    if (loaded && loaded.length > 0) {
-      skillsData.languages = loaded.filter(s => s.category === 'languages');
-      skillsData.frameworks = loaded.filter(s => s.category === 'frameworks');
-      skillsData.tools = loaded.filter(s => s.category === 'tools');
-    }
-  } catch (_) { /* offline fallback */ }
-}
-
-/* --- SKILLS --- */
-function initSkills() {
-  const wall = document.getElementById('skills-wall');
-  if (!wall) return;
-
-  const columns = [
-    { el: document.getElementById('skills-col-1'), track: document.querySelector('#skills-col-1 .skills-track'), data: skillsData.languages, dir: 1, speed: 1 },
-    { el: document.getElementById('skills-col-2'), track: document.querySelector('#skills-col-2 .skills-track'), data: skillsData.frameworks, dir: -1, speed: 0.7 },
-    { el: document.getElementById('skills-col-3'), track: document.querySelector('#skills-col-3 .skills-track'), data: skillsData.tools, dir: 1, speed: 1.2 },
-  ];
-
-  const infoPanel = document.getElementById('skills-info-panel');
-  const infoName = document.getElementById('skills-info-name');
-  const infoExp = document.getElementById('skills-info-exp');
-  const infoUsed = document.getElementById('skills-info-used');
-  const infoExtra = document.getElementById('skills-info-extra');
-  const infoExtraRow = document.getElementById('skills-info-extra-row');
-
-  if (prefersReducedMotion()) {
-    columns.forEach(col => {
-      col.data.forEach(skill => col.track.appendChild(createSkillItem(skill)));
-    });
-    return;
-  }
-
-  /* Build items */
-  columns.forEach(col => {
-    col.data.forEach((skill, i) => {
-      const item = createSkillItem(skill);
-      item.dataset.skillIdx = i;
-      col.track.appendChild(item);
-    });
-    /* Clone nodes for seamless loop — preserves data attributes */
-    const items = Array.from(col.track.children);
-    items.forEach(item => col.track.appendChild(item.cloneNode(true)));
-  });
-
-  /* Create GSAP animations — measure actual half-track for seamless loop */
-  const animations = columns.map(col => {
-    const allItems = col.track.querySelectorAll('.skill-item');
-    const halfCount = col.data.length;
-    /* Measure actual height of first half of items */
-    let totalH = 0;
-    for (let i = 0; i < halfCount; i++) {
-      totalH += allItems[i].offsetHeight;
-    }
-    /* Add gaps between items */
-    const gap = parseFloat(getComputedStyle(col.track).gap) || 0;
-    totalH += gap * (halfCount - 1);
-    const direction = col.dir === 1 ? -1 : 1;
-
-    gsap.set(col.track, { y: 0 });
-    return gsap.to(col.track, {
-      y: direction * totalH,
-      duration: totalH / (25 * col.speed),
-      ease: 'none',
-      repeat: -1,
-    });
-  });
-
-  /* Hover interactions */
-  let activeItem = null;
-  let activeColIdx = -1;
-
-  function showInfo(skill, item, colIdx) {
-    if (activeItem === item) return;
-    if (activeItem) hideInfo();
-
-    activeItem = item;
-    activeColIdx = colIdx;
-
-    infoName.textContent = skill.name;
-    infoExp.textContent = skill.experience;
-    infoUsed.textContent = skill.usedFor;
-
-    if (skill.extra) {
-      infoExtra.textContent = skill.extra;
-      infoExtraRow.style.display = '';
-    } else {
-      infoExtraRow.style.display = 'none';
-    }
-
-    infoPanel.classList.add('is-visible');
-    animations[colIdx].pause();
-    item.classList.add('is-active');
-
-    const rect = item.getBoundingClientRect();
-    const panelW = 240;
-    let left = rect.right + 16;
-    let top = rect.top;
-    if (left + panelW > window.innerWidth) left = rect.left - panelW - 16;
-    if (top + 140 > window.innerHeight) top = window.innerHeight - 160;
-    infoPanel.style.left = left + 'px';
-    infoPanel.style.top = top + 'px';
-  }
-
-  function hideInfo() {
-    if (!activeItem) return;
-    activeItem.classList.remove('is-active');
-    activeItem = null;
-    infoPanel.classList.remove('is-visible');
-    if (activeColIdx >= 0) {
-      animations[activeColIdx].resume();
-      activeColIdx = -1;
-    }
-  }
-
-  /* Event delegation on wall for hover and touch */
-  wall.addEventListener('mouseenter', (e) => {
-    const item = e.target.closest('.skill-item');
-    if (!item) return;
-    const colIdx = columns.findIndex(col => col.track.contains(item));
-    if (colIdx < 0) return;
-    const idx = parseInt(item.dataset.skillIdx, 10);
-    showInfo(columns[colIdx].data[idx], item, colIdx);
-  }, true);
-
-  wall.addEventListener('mouseleave', (e) => {
-    const item = e.target.closest('.skill-item');
-    if (item) hideInfo();
-  }, true);
-
-  wall.addEventListener('click', (e) => {
-    const item = e.target.closest('.skill-item');
-    if (!item) { hideInfo(); return; }
-    const colIdx = columns.findIndex(col => col.track.contains(item));
-    if (colIdx < 0) return;
-    if (activeItem === item) { hideInfo(); return; }
-    const idx = parseInt(item.dataset.skillIdx, 10);
-    showInfo(columns[colIdx].data[idx], item, colIdx);
-  });
-}
-
-function createSkillItem(skill) {
-  const item = document.createElement('div');
-  item.className = 'skill-item';
-  item.setAttribute('tabindex', '0');
-  item.setAttribute('role', 'button');
-  item.setAttribute('aria-label', skill.name);
-
-  const logoWrap = document.createElement('div');
-  logoWrap.className = 'skill-logo-wrap';
-
-  const img = document.createElement('img');
-  img.className = 'skill-logo';
-  img.src = skill.logo;
-  img.alt = skill.name;
-  img.loading = 'lazy';
-  img.onerror = () => {
-    img.style.display = 'none';
-    const fallback = document.createElement('span');
-    fallback.className = 'skill-logo-fallback';
-    fallback.textContent = skill.name.charAt(0);
-    logoWrap.appendChild(fallback);
-  };
-
-  logoWrap.appendChild(img);
-  item.appendChild(logoWrap);
-
-  const name = document.createElement('span');
-  name.className = 'skill-name';
-  name.textContent = skill.name;
-  item.appendChild(name);
-
-  return item;
 }
 
 /* --- CONTACT FORM --- */
