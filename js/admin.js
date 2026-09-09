@@ -2,7 +2,9 @@
    ADMIN PANEL — CORE LOGIC
    ============================================ */
 
-const API_BASE = '/api';
+const API_BASE = window.location.hostname === 'localhost'
+  ? '/api'
+  : 'https://dalcove-api.vercel.app/api';
 let authToken = localStorage.getItem('admin_token');
 let contentData = null;
 let currentSection = 'dashboard';
