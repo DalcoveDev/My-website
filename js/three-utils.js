@@ -43,3 +43,9 @@ export function isLowPowerDevice() {
 
   return lowPowerKeywords.some(kw => rendererLower.includes(kw));
 }
+
+export function getMaxPixelRatio() {
+  if (isLowPowerDevice()) return 1;
+  if (window.innerWidth < 768) return 1.5;
+  return Math.min(window.devicePixelRatio, 2);
+}
