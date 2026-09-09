@@ -24,3 +24,7 @@ export function getWebGLVersion() {
   if (webglContext instanceof WebGL2RenderingContext) return 2;
   return 1;
 }
+
+export function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
