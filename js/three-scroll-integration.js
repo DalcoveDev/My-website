@@ -120,3 +120,17 @@ export function init3DScenes() {
 
   initProjectTilt();
 }
+
+export function destroy3DScenes() {
+  if (!is3DInitialized) return;
+
+  destroyProjectTilt();
+
+  import('./three-manager.js').then(({ destroyAllScenes }) => {
+    destroyAllScenes();
+  });
+
+  document.querySelectorAll('.hero-3d-container, .about-3d-container, .skills-3d-container').forEach(el => el.remove());
+
+  is3DInitialized = false;
+}
