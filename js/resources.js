@@ -395,7 +395,7 @@ function initResources() {
 
 function initScrollAnimations() {
   if (prefersReducedMotion()) {
-    gsap.set('.rh-hero-eyebrow, .rh-hero-title, .rh-hero-desc, .rh-hero-meta, .rh-section-header, .rh-tool-row, .rh-dyk-title, .rh-dyk-center, .rh-dyk-controls, .rh-repo-row, .rh-filters, .rh-resource-row', {
+    gsap.set('.rh-hero-eyebrow, .rh-hero-title, .rh-hero-desc, .rh-hero-meta, .rh-deco-char, .rh-section-header, .rh-tool-row, .rh-dyk-title, .rh-dyk-center, .rh-dyk-controls, .rh-repo-row, .rh-filters, .rh-resource-row', {
       opacity: 1, y: 0, clipPath: 'none'
     });
     return;
@@ -415,6 +415,15 @@ function initScrollAnimations() {
     duration: 1.2,
     ease: 'power3.out',
     delay: 0.3,
+  });
+
+  gsap.from('.rh-deco-char', {
+    opacity: 0,
+    scale: 0.5,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power2.out',
+    delay: 0.5,
   });
 
   gsap.from('.rh-hero-desc', {

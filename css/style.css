@@ -361,6 +361,7 @@ input, textarea {
   overflow: hidden;
   z-index: var(--z-content);
   padding: var(--space-2xl) var(--space-md) var(--space-lg);
+  scroll-margin-top: 60px;
 }
 
 .hero-bg {
@@ -517,6 +518,7 @@ input, textarea {
   padding: var(--space-xl) var(--space-md);
   overflow: hidden;
   background: var(--c-bg);
+  scroll-margin-top: 60px;
 }
 
 .about-geo {
@@ -657,6 +659,7 @@ input, textarea {
   /* Services covers About when scrolling */
   margin-top: -100vh;
   transform: translateY(100vh);
+  scroll-margin-top: 60px;
 }
 
 .services-bg {
@@ -822,6 +825,7 @@ input, textarea {
   position: relative;
   z-index: var(--z-content);
   background: var(--c-bg);
+  scroll-margin-top: 60px;
 }
 
 .projects-intro {
@@ -1013,6 +1017,8 @@ input, textarea {
   overflow: hidden;
   z-index: var(--z-content);
   background: var(--c-bg);
+  padding-top: 60px;
+  scroll-margin-top: 60px;
 }
 
 .visual-field-track {
@@ -1053,6 +1059,7 @@ input, textarea {
   padding: var(--space-xl) var(--space-md);
   background: var(--c-cream);
   color: var(--c-text-dark);
+  scroll-margin-top: 60px;
 }
 
 .skills-container {
@@ -1267,6 +1274,7 @@ input, textarea {
   padding: var(--space-xl) var(--space-md);
   z-index: var(--z-content);
   background: var(--c-bg);
+  scroll-margin-top: 60px;
 }
 
 .gallery-container {
@@ -1366,6 +1374,7 @@ input, textarea {
   z-index: var(--z-content);
   background: var(--c-cream);
   color: var(--c-text-dark);
+  scroll-margin-top: 60px;
 }
 
 .testimonials-container {
@@ -1499,6 +1508,7 @@ input, textarea {
   padding: var(--space-xl) var(--space-md);
   z-index: var(--z-content);
   background: var(--c-bg);
+  scroll-margin-top: 60px;
 }
 
 .contact-geo {
