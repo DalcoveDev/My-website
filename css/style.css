@@ -821,8 +821,15 @@ input, textarea {
 .projects {
   position: relative;
   z-index: var(--z-content);
-  padding: var(--space-2xl) var(--space-md);
   background: var(--c-bg);
+}
+
+.projects-intro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
 }
 
 .projects-header {
@@ -838,11 +845,18 @@ input, textarea {
   font-family: var(--f-display);
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 600;
-  margin-bottom: var(--space-xl);
   max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: var(--space-xl);
+  margin: 0 auto var(--space-md);
+}
+
+.projects-scroll-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  max-width: 1400px;
+  margin: 0 auto;
+  opacity: 0.6;
 }
 
 .projects-stack {

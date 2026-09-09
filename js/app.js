@@ -405,29 +405,38 @@ function initServices() {
 
 /* --- PROJECTS --- */
 function initProjects() {
-  const title = document.querySelector('.projects-title');
-  const label = document.querySelector('.projects .section-label');
+  const intro = document.querySelector('.projects-intro');
+  const introTitle = document.querySelector('.projects-title');
+  const introLabel = document.querySelector('.projects .section-label');
+  const scrollHint = document.querySelector('.projects-scroll-hint');
   const stack = document.getElementById('projects-stack');
   const cards = document.querySelectorAll('.project-card');
 
   if (prefersReducedMotion()) {
-    gsap.set([title, label, ...cards], { opacity: 1, y: 0 });
+    gsap.set([introTitle, introLabel, scrollHint, ...cards], { opacity: 1, y: 0 });
     return;
   }
 
-  gsap.from(label, {
+  /* Intro animations */
+  gsap.from(introLabel, {
     opacity: 0,
     y: 20,
     duration: 0.8,
-    scrollTrigger: { trigger: '.projects', start: 'top 70%' }
+    scrollTrigger: { trigger: intro, start: 'top 70%' }
   });
 
-  gsap.from(title, {
+  gsap.from(introTitle, {
     opacity: 0,
     y: 40,
     duration: 1,
     ease: 'power2.out',
-    scrollTrigger: { trigger: '.projects', start: 'top 60%' }
+    scrollTrigger: { trigger: intro, start: 'top 60%' }
+  });
+
+  gsap.from(scrollHint, {
+    opacity: 0,
+    duration: 0.6,
+    scrollTrigger: { trigger: intro, start: 'top 50%' }
   });
 
   /* Stacked card-deck system
