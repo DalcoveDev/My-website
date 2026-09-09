@@ -55,6 +55,8 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
+      const { section, limit, offset } = req.query;
+      
       const settingsRows = await sql`SELECT key, value FROM settings`;
       const settings = {};
       for (const row of settingsRows) {
@@ -66,16 +68,47 @@ export default async function handler(req, res) {
         'repositories', 'library', 'projects', 'gallery', 'visualField'
       ];
 
+      const targetSections = section ? [section] : sections;
       const items = {};
-      for (const section of sections) {
-        const rows = await sql`SELECT id, sort_order, data FROM items WHERE section = ${section} ORDER BY sort_order ASC`;
-        items[section] = rows.map(r => ({ id: r.id, ...r.data }));
+      const pagination = {};
+      
+      for (const sec of targetSections) {
+        let rows;
+        
+        if (limit) {
+          const limitNum = Math.min(parseInt(limit, 10) || 20, 100);
+          const offsetNum = parseInt(offset, 10) || 0;
+          
+          const countResult = await sql`SELECT COUNT(*) as count FROM items WHERE section = ${sec}`;
+          const total = parseInt(countResult[0].count, 10);
+          
+          rows = await sql`SELECT id, sort_order, data FROM items WHERE section = ${sec} ORDER BY sort_order ASC LIMIT ${limitNum} OFFSET ${offsetNum}`;
+          
+          pagination[sec] = {
+            total,
+            limit: limitNum,
+            offset: offsetNum,
+            hasMore: offsetNum + limitNum < total
+          };
+        } else {
+          rows = await sql`SELECT id, sort_order, data FROM items WHERE section = ${sec} ORDER BY sort_order ASC`;
+        }
+        
+        items[sec] = rows.map(r => ({ id: r.id, ...r.data }));
       }
 
       const imagesRows = await sql`SELECT id, filename, alt, section, sort_order FROM images ORDER BY sort_order ASC`;
       const images = imagesRows.map(r => ({ id: r.id, filename: r.filename, alt: r.alt, section: r.section }));
 
-      return res.status(200).json({ settings, items, images });
+      const response = { settings, items, images };
+      
+      if (section && pagination[section]) {
+        response.pagination = pagination[section];
+      } else if (Object.keys(pagination).length > 0) {
+        response.pagination = pagination;
+      }
+
+      return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({ error: 'Failed to fetch content', details: error.message });
     }
