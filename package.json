@@ -8,7 +8,10 @@
     "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:test": "cd backend && npm test",
+    "backend:migrate": "cd backend && npm run migrate"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
