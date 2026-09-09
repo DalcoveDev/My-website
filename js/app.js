@@ -5,7 +5,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { loadContent, getItems } from './content-loader.js';
+import { loadContent, getItems, getSettings } from './content-loader.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -953,9 +953,51 @@ function initContactForm() {
   });
 }
 
+/* --- CONTENT UPDATE --- */
+function updateDOMContent() {
+  const s = getSettings();
+
+  /* Hero */
+  const heroTitle = document.querySelector('.hero-title-line:first-child');
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+  if (heroTitle && s.hero?.title) heroTitle.textContent = s.hero.title;
+  if (heroSubtitle && s.hero?.subtitle) heroSubtitle.textContent = s.hero.subtitle;
+
+  /* About */
+  const aboutLabel = document.querySelector('.about .section-label');
+  const aboutTitleLines = document.querySelectorAll('.about-title .title-line');
+  const aboutTexts = document.querySelectorAll('.about-text');
+  if (aboutLabel && s.about?.label) aboutLabel.textContent = s.about.label;
+  if (aboutTitleLines.length && s.about?.title) {
+    aboutTitleLines.forEach((line, i) => { if (s.about.title[i]) line.textContent = s.about.title[i]; });
+  }
+  if (aboutTexts.length && s.about?.paragraphs) {
+    aboutTexts.forEach((p, i) => { if (s.about.paragraphs[i]) p.textContent = s.about.paragraphs[i]; });
+  }
+
+  /* Contact */
+  const contactLabel = document.querySelector('.contact .section-label');
+  const contactTitleLines = document.querySelectorAll('.contact-title .title-line');
+  const contactEmail = document.querySelector('.contact-email');
+  const contactAvail = document.querySelector('.contact-availability');
+  if (contactLabel && s.contact?.label) contactLabel.textContent = s.contact.label;
+  if (contactTitleLines.length && s.contact?.title) {
+    contactTitleLines.forEach((line, i) => { if (s.contact.title[i]) line.textContent = s.contact.title[i]; });
+  }
+  if (contactEmail && s.contact?.email) contactEmail.textContent = s.contact.email;
+  if (contactAvail && s.contact?.availability) contactAvail.textContent = s.contact.availability;
+
+  /* Preloader */
+  const preloaderName = document.querySelector('.preloader-name');
+  const preloaderSub = document.querySelector('.preloader-sub');
+  if (preloaderName && s.preloader?.name) preloaderName.textContent = s.preloader.name;
+  if (preloaderSub && s.preloader?.subtitle) preloaderSub.textContent = s.preloader.subtitle;
+}
+
 /* --- INIT --- */
 async function init() {
   await loadContent();
+  updateDOMContent();
   await refreshServicesData();
   await refreshTestimonialsData();
   await refreshSkillsData();

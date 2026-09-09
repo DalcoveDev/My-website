@@ -3,7 +3,9 @@
    Falls back to hardcoded data if API unavailable
    ============================================ */
 
-const API_BASE = '/api';
+const API_BASE = window.location.hostname === 'localhost'
+  ? '/api'
+  : 'https://dalcove-api.vercel.app/api';
 const CACHE_KEY = 'dalcove_content_cache';
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
