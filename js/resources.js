@@ -17,6 +17,15 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function initRowClicks(container) {
+  container.querySelectorAll('[data-url]').forEach(row => {
+    row.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      window.open(row.dataset.url, '_blank', 'noopener,noreferrer');
+    });
+  });
+}
+
 /* --- CUSTOM CURSOR --- */
 function initCursor() {
   if (isTouchDevice()) return;
@@ -128,11 +137,11 @@ function initResourceHub() {
 function renderToolRow(tool, index) {
   const num = String(index + 1).padStart(2, '0');
   const linkHtml = tool.url
-    ? `<a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="rh-tool-action" data-cursor="OPEN">OPEN TOOL <span class="rh-tool-arrow">→</span></a>`
+    ? `<a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="rh-tool-action" data-cursor="OPEN" onclick="event.stopPropagation()">OPEN TOOL <span class="rh-tool-arrow">→</span></a>`
     : '';
 
   return `
-    <div class="rh-tool-row" data-cursor="VIEW">
+    <div class="rh-tool-row" data-cursor="VIEW" ${tool.url ? `data-url="${tool.url}"` : ''}>
       <span class="rh-tool-num">${num}</span>
       <div class="rh-tool-main">
         <span class="rh-tool-category">${tool.category}</span>
@@ -159,6 +168,9 @@ function initTools() {
 
   expandedListEl.innerHTML = resourceHubData.tools.slice(primaryCount)
     .map((t, i) => renderToolRow(t, i + primaryCount)).join('');
+
+  initRowClicks(listEl);
+  initRowClicks(expandedListEl);
 
   viewMoreBtn.addEventListener('click', () => {
     expandedEl.classList.add('is-active');
@@ -285,14 +297,14 @@ function renderRepoRow(repo, index) {
   const tagsHtml = repo.tags.map(t => `<span>${t}</span>`).join('');
 
   return `
-    <div class="rh-repo-row" data-cursor="VIEW">
+    <div class="rh-repo-row" data-cursor="VIEW" ${repo.github ? `data-url="${repo.github}"` : ''}>
       <span class="rh-repo-num">${num}</span>
       <div class="rh-repo-main">
         <h4 class="rh-repo-name">${repo.name}</h4>
         <div class="rh-repo-tags">${tagsHtml}</div>
         <p class="rh-repo-desc">${repo.description}</p>
       </div>
-      <a href="${repo.github}" target="_blank" rel="noopener noreferrer" class="rh-repo-action" data-cursor="OPEN">GITHUB <span class="rh-repo-arrow">→</span></a>
+      <a href="${repo.github}" target="_blank" rel="noopener noreferrer" class="rh-repo-action" data-cursor="OPEN" onclick="event.stopPropagation()">GITHUB <span class="rh-repo-arrow">→</span></a>
     </div>
   `;
 }
@@ -303,6 +315,8 @@ function initRepositories() {
 
   listEl.innerHTML = resourceHubData.repositories
     .map((r, i) => renderRepoRow(r, i)).join('');
+
+  initRowClicks(listEl);
 
   // Init cursor on repo rows
   if (!isTouchDevice()) {
@@ -329,13 +343,13 @@ function renderResourceRow(resource) {
   const categorySlug = resource.category.toLowerCase().replace(/\s+/g, '-');
 
   return `
-    <div class="rh-resource-row" data-category="${categorySlug}" data-cursor="VIEW">
+    <div class="rh-resource-row" data-category="${categorySlug}" data-cursor="VIEW" ${resource.url ? `data-url="${resource.url}"` : ''}>
       <div class="rh-resource-main">
         <span class="rh-resource-category">${resource.category}</span>
         <h4 class="rh-resource-name">${resource.name}</h4>
         <p class="rh-resource-desc">${resource.description}</p>
       </div>
-      <a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="rh-resource-action" data-cursor="OPEN">OPEN <span class="rh-resource-arrow">→</span></a>
+      <a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="rh-resource-action" data-cursor="OPEN" onclick="event.stopPropagation()">OPEN <span class="rh-resource-arrow">→</span></a>
     </div>
   `;
 }
@@ -348,6 +362,8 @@ function initResources() {
 
   listEl.innerHTML = resourceHubData.library
     .map(r => renderResourceRow(r)).join('');
+
+  initRowClicks(listEl);
 
   // Init cursor on resource rows
   if (!isTouchDevice()) {
