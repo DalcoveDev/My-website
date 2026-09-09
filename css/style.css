@@ -430,15 +430,20 @@ input, textarea {
 
 .hero-circle {
   position: absolute;
-  width: clamp(160px, 18vw, 260px);
-  height: clamp(160px, 18vw, 260px);
-  border-radius: 50%;
-  border: 1.5px solid var(--c-accent);
+  width: clamp(350px, 45vw, 650px);
+  height: clamp(350px, 45vw, 650px);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  border: 3px solid var(--c-accent);
+  background: var(--c-accent);
+  mix-blend-mode: normal;
+  box-shadow: 0 0 80px rgba(200, 255, 0, 0.3), inset 0 0 80px rgba(200, 255, 0, 0.15);
   top: 50%;
-  left: clamp(380px, 50vw, 720px);
+  left: 30%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  z-index: 1;
+  z-index: -1;
+  animation: blobMorph 8s ease-in-out infinite;
+  will-change: border-radius;
 }
 
 .deco-char {
@@ -469,6 +474,7 @@ input, textarea {
   position: relative;
   z-index: 3;
   max-width: 800px;
+  isolation: isolate;
 }
 
 .hero-title {
@@ -480,6 +486,7 @@ input, textarea {
   text-transform: uppercase;
   overflow: hidden;
   margin-bottom: var(--space-sm);
+  mix-blend-mode: exclusion;
 }
 
 .hero-title-line {
@@ -514,6 +521,21 @@ input, textarea {
 
 .hero-scroll-indicator svg {
   animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes blobMorph {
+  0%, 100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  25% {
+    border-radius: 58% 42% 34% 66% / 63% 68% 32% 37%;
+  }
+  50% {
+    border-radius: 42% 58% 62% 38% / 45% 32% 68% 55%;
+  }
+  75% {
+    border-radius: 66% 34% 42% 58% / 37% 62% 38% 63%;
+  }
 }
 
 @keyframes scrollPulse {
@@ -1786,9 +1808,12 @@ input, textarea {
   }
 
   .hero-circle {
-    width: clamp(100px, 25vw, 160px);
-    height: clamp(100px, 25vw, 160px);
-    left: clamp(260px, 65vw, 400px);
+    width: clamp(220px, 55vw, 350px);
+    height: clamp(220px, 55vw, 350px);
+    left: 25%;
+    border-width: 2px;
+    background: var(--c-accent);
+    box-shadow: 0 0 50px rgba(200, 255, 0, 0.25), inset 0 0 50px rgba(200, 255, 0, 0.1);
   }
 
   .project-meta {
