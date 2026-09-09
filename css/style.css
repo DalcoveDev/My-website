@@ -428,6 +428,19 @@ input, textarea {
   z-index: 2;
 }
 
+.hero-circle {
+  position: absolute;
+  width: clamp(160px, 18vw, 260px);
+  height: clamp(160px, 18vw, 260px);
+  border-radius: 50%;
+  border: 1.5px solid var(--c-accent);
+  top: 50%;
+  left: clamp(380px, 50vw, 720px);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 1;
+}
+
 .deco-char {
   position: absolute;
   font-family: var(--f-body);
@@ -1770,6 +1783,12 @@ input, textarea {
     height: 95vh;
     right: -12%;
     opacity: 0.6;
+  }
+
+  .hero-circle {
+    width: clamp(100px, 25vw, 160px);
+    height: clamp(100px, 25vw, 160px);
+    left: clamp(260px, 65vw, 400px);
   }
 
   .project-meta {

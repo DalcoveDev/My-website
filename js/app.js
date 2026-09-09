@@ -146,9 +146,10 @@ function initHero() {
   const subtitle = document.querySelector('.hero-subtitle');
   const portrait = document.querySelector('.hero-portrait');
   const scrollIndicator = document.querySelector('.hero-scroll-indicator');
+  const heroCircle = document.querySelector('.hero-circle');
 
   if (prefersReducedMotion()) {
-    gsap.set([titleLine, subtitle, portrait], { opacity: 1, y: 0, scale: 1 });
+    gsap.set([titleLine, subtitle, portrait, heroCircle], { opacity: 1, y: 0, scale: 1 });
     return;
   }
 
@@ -165,13 +166,18 @@ function initHero() {
     duration: 0.8,
     ease: 'power2.out',
   }, '-=0.5')
+  .to(heroCircle, {
+    opacity: 1,
+    duration: 1,
+    ease: 'power2.out',
+  }, '-=0.6')
   .to(portrait, {
     opacity: 1,
     y: 0,
     scale: 1,
     duration: 1.4,
     ease: 'power2.out',
-  }, '-=0.6')
+  }, '-=0.8')
   .from(scrollIndicator, {
     opacity: 0,
     duration: 0.6,
