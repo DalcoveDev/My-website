@@ -1,0 +1,31 @@
+{
+  "name": "dalcove-portfolio-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Dalcove Portfolio - Vercel Serverless Functions with Neon Postgres",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "migrate": "node migrations/run.js",
+    "seed": "node seed.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  },
+  "keywords": [
+    "portfolio",
+    "backend",
+    "vercel",
+    "neon",
+    "serverless"
+  ],
+  "author": "Ingabire Dalcove",
+  "license": "MIT"
+}
