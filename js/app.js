@@ -6,6 +6,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { loadContent, getItems } from './content-loader.js';
+import { init3DScenes } from './three-scroll-integration.js';
+import { init3DScenes } from './three-scroll-integration.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -951,6 +953,8 @@ async function init() {
   initTestimonials();
   initContact();
   initContactForm();
+
+  init3DScenes();
 
   /* Refresh ScrollTrigger after all sections are set up */
   ScrollTrigger.refresh();
