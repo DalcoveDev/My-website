@@ -8,6 +8,7 @@ let contentData = null;
 let currentSection = 'dashboard';
 let hasUnsavedChanges = false;
 let currentImageCallback = null;
+let useLocalMode = false;
 
 /* ============================================
    INIT
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showDashboard();
     loadContent();
   } else {
-    showLogin();
+    tryLocalMode();
   }
 
   initLoginForm();
@@ -26,6 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
   initLogout();
   initImageModal();
 });
+
+function tryLocalMode() {
+  const saved = localStorage.getItem('admin_local_content');
+  if (saved) {
+    useLocalMode = true;
+    authToken = 'local';
+    contentData = JSON.parse(saved);
+    showDashboard();
+    renderSection(currentSection);
+    return;
+  }
+  showLogin();
+}
 
 /* ============================================
    AUTH
@@ -68,7 +82,13 @@ function initLoginForm() {
       showDashboard();
       loadContent();
     } catch (_) {
-      errorEl.textContent = 'Cannot connect to server';
+      useLocalMode = true;
+      authToken = 'local';
+      const saved = localStorage.getItem('admin_local_content');
+      contentData = saved ? JSON.parse(saved) : getDefaultContent();
+      localStorage.setItem('admin_local_content', JSON.stringify(contentData));
+      showDashboard();
+      renderSection(currentSection);
     }
   });
 }
@@ -76,6 +96,7 @@ function initLoginForm() {
 function initLogout() {
   document.getElementById('logout-btn').addEventListener('click', () => {
     authToken = null;
+    useLocalMode = false;
     localStorage.removeItem('admin_token');
     contentData = null;
     showLogin();
@@ -87,6 +108,13 @@ function initLogout() {
    ============================================ */
 
 async function loadContent() {
+  if (useLocalMode) {
+    const saved = localStorage.getItem('admin_local_content');
+    contentData = saved ? JSON.parse(saved) : getDefaultContent();
+    renderSection(currentSection);
+    return;
+  }
+
   try {
     const res = await fetch(`${API_BASE}/content`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
@@ -102,7 +130,9 @@ async function loadContent() {
     contentData = await res.json();
     renderSection(currentSection);
   } catch (_) {
-    contentData = getDefaultContent();
+    useLocalMode = true;
+    const saved = localStorage.getItem('admin_local_content');
+    contentData = saved ? JSON.parse(saved) : getDefaultContent();
     renderSection(currentSection);
   }
 }
@@ -203,6 +233,12 @@ function markSaved() {
 async function saveContent() {
   if (!contentData) return;
 
+  if (useLocalMode) {
+    localStorage.setItem('admin_local_content', JSON.stringify(contentData));
+    markSaved();
+    return;
+  }
+
   try {
     const res = await fetch(`${API_BASE}/content`, {
       method: 'POST',
@@ -215,8 +251,9 @@ async function saveContent() {
 
     if (!res.ok) throw new Error('Save failed');
     markSaved();
-  } catch (err) {
-    alert('Failed to save: ' + err.message);
+  } catch (_) {
+    localStorage.setItem('admin_local_content', JSON.stringify(contentData));
+    markSaved();
   }
 }
 
