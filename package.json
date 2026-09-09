@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
-    "gsap": "^3.12.5"
+    "gsap": "^3.12.5",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
