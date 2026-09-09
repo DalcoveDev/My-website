@@ -42,3 +42,68 @@ function startRenderLoop() {
 
   animate();
 }
+
+export function registerScene(id, config) {
+  if (!isWebGLSupported() || prefersReducedMotion()) {
+    if (config.container) {
+      createWebGLFallback(config.container);
+    }
+    return null;
+  }
+
+  const container = config.container;
+  if (!container) return null;
+
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({
+    alpha: config.alpha !== false,
+    antialias: config.antialias !== false,
+    powerPreference: 'low-power'
+  });
+
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(getMaxPixelRatio());
+  renderer.setClearColor(config.clearColor || 0x000000, config.clearAlpha || 0);
+
+  if (config.toneMapping) {
+    renderer.toneMapping = config.toneMapping;
+    renderer.toneMappingExposure = config.toneMappingExposure || 1;
+  }
+
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  if (config.fog) {
+    scene.fog = new THREE.Fog(config.fog.color, config.fog.near, config.fog.far);
+  }
+
+  const camera = new THREE.PerspectiveCamera(config.fov || 50, width / height, config.near || 0.1, config.far || 1000);
+  if (config.cameraPosition) {
+    camera.position.set(config.cameraPosition.x || 0, config.cameraPosition.y || 0, config.cameraPosition.z || 5);
+  }
+  if (config.cameraLookAt) {
+    camera.lookAt(new THREE.Vector3(config.cameraLookAt.x || 0, config.cameraLookAt.y || 0, config.cameraLookAt.z || 0));
+  }
+
+  const sceneData = {
+    id,
+    container,
+    renderer,
+    scene,
+    camera,
+    active: false,
+    setup: config.setup || null,
+    update: config.update || null,
+    destroy: config.destroy || null,
+    metadata: config.metadata || {}
+  };
+
+  if (config.setup) {
+    config.setup(scene, camera, container);
+  }
+
+  scenes.set(id, sceneData);
+  return sceneData;
+}
