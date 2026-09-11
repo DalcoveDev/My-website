@@ -930,7 +930,7 @@ input, textarea {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  align-items: start;
+  align-items: center;
 }
 
 /* Project 01 - Feature layout */
@@ -953,12 +953,19 @@ input, textarea {
 }
 
 .project-card--visual .project-visual--large {
-  min-height: 400px;
+  min-height: 450px;
 }
 
 /* Project 04 - Compact */
 .project-card--compact .project-card-inner {
   grid-template-columns: 0.8fr 1fr;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-xs);
 }
 
 .project-meta {
@@ -1029,6 +1036,7 @@ input, textarea {
 
 .project-visual {
   width: 100%;
+  min-height: 350px;
   overflow: hidden;
 }
 
@@ -1834,7 +1842,7 @@ input, textarea {
   }
 
   /* Mobile: title first, image bottom for all card variants */
-  .project-card--feature .project-info { order: 0; }
+  .project-card--feature .project-content { order: 0; }
   .project-card--feature .project-visual { order: 1; }
   .project-card--split .project-visual { order: 1; }
   .project-card--split .project-content { order: 0; }
