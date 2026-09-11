@@ -474,7 +474,6 @@ input, textarea {
   position: relative;
   z-index: 3;
   max-width: 800px;
-  isolation: isolate;
 }
 
 .hero-title {
